@@ -1,0 +1,61 @@
+.categories {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it's above other elements */
+  background: white; /* Add background to prevent transparency issues */
+  padding: 12px;
+  display: flex;
+  align-items: flex-start; /* Align to the top of the container */
+  justify-content: flex-start; /* Align to the left */
+  gap: 15px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category-box {
+  position: relative; /* Ensure child elements are positioned relative to this box */
+  flex: 0 0 200px; /* Set a fixed width for swiper items */
+  height: 200px; /* Increase the size of the boxes */
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start; /* Ensure boxes align when swiped */
+}
+
+.category-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.category-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.category-box span {
+  position: absolute;
+  top: 50%; /* Move to the vertical center */
+  left: 50%; /* Move to the horizontal center */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Center the text both vertically and horizontally */
+  color: rgba(255, 255, 255, 0.8); /* Semi-transparent white text */
+  font-size: 18px; /* Adjust font size as needed */
+  font-weight: bold;
+  pointer-events: none; /* Ensure the text does not block interactions with the box */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Handle overflow gracefully */
+  overflow: hidden; /* Ensure text stays inside the box */
+  max-width: 80%; /* Limit text width to avoid overlap */
+  text-align: center; /* Center-align the text */
+}

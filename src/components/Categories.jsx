@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from "react";
+import api from "../services/api";
+import "../style/Categories.css";
+
+const Categories = ({ onCategoryClick }) => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await api.get("/categories/?shop_id=3");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  return (
+    <div className="categories">
+      <div className="category-box" onClick={() => onCategoryClick(null)}>
+        {/* <img
+          src="https://via.placeholder.com/50"
+          alt="All Categories"
+          width="50"
+        /> */}
+        <span style={{color:'black', fontSize:'x-Large'}}>All Categories</span>
+      </div>
+      {categories.map((category) => (
+        <div
+          key={category.id}
+          className="category-box"
+          onClick={() => onCategoryClick(category.id)}
+        >
+          <img
+            src={`http://localhost:5000/${category.image}`}
+            alt={category.name}
+            width="50"
+          />
+          <span>{category.name}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Categories;

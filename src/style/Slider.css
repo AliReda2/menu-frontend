@@ -1,0 +1,19 @@
+.slider {
+    height: 300px;
+    background: var(--background-image) center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.slide h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.slide p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}

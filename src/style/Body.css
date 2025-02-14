@@ -1,0 +1,112 @@
+.body {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.slider-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    border: 1px solid #ddd;
+}
+
+.product-image {
+    flex: 0 0 150px; /* Set a fixed width for the image container */
+    height: 100%; /* Stretch the height to fill the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+
+.product-image img {
+    width: 100%; /* Ensures the image fills the container horizontally */
+    height: 100%; /* Ensures the image fills the container vertically */
+    object-fit: cover; /* Maintains the aspect ratio and fits the image within the container */
+}
+
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 10px;
+}
+
+.product-details h3 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.product-details p {
+    color: #666;
+    font-size: 1em;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #000;
+}
+
+.quantity-controls {
+    position: absolute;
+    right: 10px; /* Move the controls to the right edge */
+    display: flex;
+    align-items: center;
+    margin-top: 90px;
+    margin-right: 40px;
+    gap: 10px;
+  }
+
+.quantity-controls button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.quantity-controls button:hover {
+    background-color: #e68900;
+}
+
+.quantity-controls span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.add-to-cart {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
