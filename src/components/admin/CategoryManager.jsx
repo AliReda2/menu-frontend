@@ -142,7 +142,7 @@ const CategoryManager = ({ shopId }) => {
               <td>
                 {cat.image ? (
                   <img
-                    src={`http://localhost:5000/${cat.image}`}
+                    src={`https://menu-backend-rnpu.onrender.com/${cat.image}`}
                     alt={cat.name}
                     width="50"
                   />

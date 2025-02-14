@@ -21,7 +21,9 @@ const Slider = () => {
   return (
     <div
       className="slider"
-      style={{ "--background-image": `url(http://localhost:5000/${shop.image})` }}
+      style={{
+        "--background-image": `url(https://menu-backend-rnpu.onrender.com/${shop.image})`,
+      }}
     >
       <div className="slide">
         <h1>Welcome to {shop.name}</h1>

@@ -26,7 +26,9 @@ const Categories = ({ onCategoryClick }) => {
           alt="All Categories"
           width="50"
         /> */}
-        <span style={{color:'black', fontSize:'x-Large'}}>All Categories</span>
+        <span style={{ color: "black", fontSize: "x-Large" }}>
+          All Categories
+        </span>
       </div>
       {categories.map((category) => (
         <div
@@ -35,7 +37,7 @@ const Categories = ({ onCategoryClick }) => {
           onClick={() => onCategoryClick(category.id)}
         >
           <img
-            src={`http://localhost:5000/${category.image}`}
+            src={`https://menu-backend-rnpu.onrender.com/${category.image}`}
             alt={category.name}
             width="50"
           />
