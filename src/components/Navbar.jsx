@@ -27,7 +27,7 @@ const Navbar = ({ shopId }) => {
       <ul className="nav-links">
         <li>
           <NavLink
-            to={shopId ? `/${shopId}` : "/"}
+            to={`/${shopId}`}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
@@ -35,7 +35,7 @@ const Navbar = ({ shopId }) => {
         </li>
         <li>
           <NavLink
-            to={shopId ? `/about/${shopId}` : "/about"}
+            to={`/about/${shopId}`}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             About Us
@@ -43,7 +43,7 @@ const Navbar = ({ shopId }) => {
         </li>
         <li>
           <NavLink
-            to={shopId ? `/admin-login/${shopId}` : "/admin-login"}
+            to={"/admin-login"}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Admin Panel
