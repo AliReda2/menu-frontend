@@ -6,12 +6,13 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Add a request interceptor to attach shop_id dynamically
+// Add a request interceptor to attach shop_id dynamically in the URL path
 api.interceptors.request.use(
   (config) => {
-    const shopId = window.location.pathname.split("/")[1]; // Get shop_id from URL
+    const shopId = window.location.pathname.split("/")[1]; // Get shop_id from URL path
     if (shopId) {
-      config.params = { shopId };
+      // Update the URL to include the shopId in the path
+      config.url = `${shopId}`; // Set URL to /shops/3 (or whatever shopId is)
     }
     console.log("Extracted shopId:", shopId);
     console.log("Request config:", config);
