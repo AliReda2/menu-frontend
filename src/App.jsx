@@ -12,9 +12,8 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-const { shopId } = useParams(); // Extract shopId from the URL
-
 const App = () => {
+  const { shopId } = useParams(); // Extract shopId from the URL
   return (
     <Router>
       <Navbar shopId={shopId} />
