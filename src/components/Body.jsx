@@ -1,5 +1,5 @@
-// src/components/Body.js
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom"; // Import useParams
 import api from "../services/api";
 import "../style/Body.css";
 import Categories from "./Categories";
@@ -14,33 +14,37 @@ const Body = ({
   handleDuplicateAdd,
   handleDuplicateQuantityChangeGlobal,
 }) => {
+  const { shopId } = useParams(); // Get shopId from the URL dynamically
+
   const [addOns, setAddOns] = useState([]);
-  // duplicateProducts: { [product.id]: { [addOn.id]: { addOn, quantity } } }
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
-  // activeCategory (null = no filter)
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
+    if (!shopId) return; // Ensure shopId is available before making API calls
+
     const fetchShop = async () => {
       try {
-        const response = await api.get("/shops/3");
+        const response = await api.get(`/shops/${shopId}`); // Use dynamic shopId
         setCategory(response.data.shop.categories);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
     };
+
     const fetchAddOns = async () => {
       try {
-        const response = await api.get("/addOns?shop_id=3");
+        const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
         setAddOns(response.data);
       } catch (error) {
         console.error("Error fetching add-ons:", error);
       }
     };
+
     fetchShop();
     fetchAddOns();
-  }, [setCategory]);
+  }, [shopId, setCategory]); // Ensure useEffect runs whenever shopId changes
 
   const handleAddOnChange = (product, addOnId) => {
     if (!addOnId) return; // "None" selected
@@ -56,22 +60,18 @@ const Body = ({
           },
         };
       });
-      // Reset the select for that product.
       setSelectedAddOns((prev) => ({
         ...prev,
         [product.id]: null,
       }));
-      // Update the global order state with this duplicate.
       handleDuplicateAdd(product, chosenAddOn);
     }
   };
 
-  // Handle category filter changes.
   const handleCategoryClick = (categoryId) => {
     setActiveCategory(categoryId);
   };
 
-  // Update duplicate product quantity and remove from local state when it reaches 0.
   const handleDuplicateQuantityChange = (
     productId,
     addOnId,
@@ -109,7 +109,6 @@ const Body = ({
             <h3>{cat.name}</h3>
             <div className="slider-container">
               {cat.menu.map((product) => {
-                // When duplicate exists, force the select to ""
                 const duplicateExists =
                   duplicateProducts[product.id] &&
                   Object.keys(duplicateProducts[product.id]).length > 0;
@@ -118,7 +117,6 @@ const Body = ({
                   : selectedAddOns[product.id]?.id || "";
                 return (
                   <React.Fragment key={product.id}>
-                    {/* Original product */}
                     <div className="slider-item">
                       <div className="product-image">
                         <img
@@ -179,7 +177,6 @@ const Body = ({
                         </div>
                       </div>
                     </div>
-                    {/* Duplicate product display */}
                     {duplicateProducts[product.id] &&
                       Object.values(duplicateProducts[product.id]).map(
                         (dup) => (

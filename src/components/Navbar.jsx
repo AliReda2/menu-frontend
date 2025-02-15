@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import { NavLink } from "react-router-dom";
 import "../style/Navbar.css";
+import { useParams } from "react-router-dom"; // Import useParams
 
 const Navbar = () => {
   const [shop, setShop] = useState("");
+  const { shopId } = useParams(); // Get shopId from the URL dynamically
 
   useEffect(() => {
     const fetchShop = async () => {
       try {
-        const response = await api.get("/shops/3");
+        const response = await api.get(`/shops/${shopId}`);
         setShop(response.data.shop);
         // console.log("Fetched shop:", response.data);
 

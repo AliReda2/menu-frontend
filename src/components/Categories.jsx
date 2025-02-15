@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import "../style/Categories.css";
+import { useParams } from "react-router-dom"; // Import useParams
 
 const Categories = ({ onCategoryClick }) => {
   const [categories, setCategories] = useState([]);
+  const { shopId } = useParams(); // Get shopId from the URL dynamically
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get("/categories/?shop_id=3");
+        const response = await api.get(`/categories/?shop_id=${shopId}`); // Use dynamic shopId
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);

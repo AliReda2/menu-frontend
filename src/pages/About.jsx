@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import api from "../services/api";
 import "../style/AboutUs.css";
+import { useParams } from "react-router-dom"; // Import useParams
 
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({
@@ -19,11 +20,12 @@ const customIcon = new L.Icon({
 
 const AboutUs = () => {
   const [data, setData] = useState("");
+  const { shopId } = useParams(); // Get shopId from the URL dynamically
 
   useEffect(() => {
     const fetchAboutUs = async () => {
       try {
-        const response = await api.get("/aboutUs?shop_id=3");
+        const response = await api.get(`/aboutUs?shop_id=${shopId}`);
 
         // Ensure valid latitude and longitude exist before updating state
         if (response.data.latitude && response.data.longitude) {
