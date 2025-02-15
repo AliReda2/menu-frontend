@@ -6,10 +6,11 @@ import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
 import AboutUsUpdate from "../components/admin/AboutUsUpdate";
 import api from "../services/api";
-import "../style/AdminDashboard.css"
+import "../style/AdminDashboard.css";
+import { useParams } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const shopId = localStorage.getItem("shop_id");
+  const { shopId } = useParams();
   const [shopData, setShopData] = useState({ name: "", description: "" });
   const [error, setError] = useState("");
 
