@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
 import api from "../services/api";
 import "../style/Body.css";
 import Categories from "./Categories";

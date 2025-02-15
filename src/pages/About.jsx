@@ -4,7 +4,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import api from "../services/api";
 import "../style/AboutUs.css";
-import { useParams } from "react-router-dom"; // Import useParams
 
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({
@@ -18,9 +17,8 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-const AboutUs = () => {
+const AboutUs = ({shopId}) => {
   const [data, setData] = useState("");
-  const { shopId } = useParams(); // Get shopId from the URL dynamically
 
   useEffect(() => {
     const fetchAboutUs = async () => {
