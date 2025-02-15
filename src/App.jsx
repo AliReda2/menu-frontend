@@ -2,22 +2,28 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import AboutUs from "./pages/About";
+import AboutUs from "./pages/AboutUs";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import the Protected Route
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
+        <Route path="/" element={<Home />} />{" "}
+        {/* Default Home without shopId */}
+        <Route path="/:shopId" element={<Home />} />
+        <Route path="/about/:shopId" element={<AboutUs />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route
-          path="/admin"
-          element={<ProtectedRoute element={<AdminDashboard />} />}
+          path="/admin/:shopId"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </Router>
