@@ -14,6 +14,7 @@ api.interceptors.request.use(
       config.params = { ...config.params, shopId };
     }
     console.log("Extracted shopId:", shopId);
+    console.log("Request config:", config);
     return config;
   },
   (error) => Promise.reject(error)
