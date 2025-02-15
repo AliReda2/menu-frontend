@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
 import api from "../services/api";
 import "../style/Slider.css";
 
-const Slider = () => {
-  const { shopId } = useParams(); // Get shopId from the URL
-
+const Slider = ({ shopId }) => {
   const [shop, setShop] = useState("");
 
   useEffect(() => {
     const fetchShop = async () => {
       try {
-        // Use the shopId dynamically from the URL
+        // Fetch shop data using the shopId passed in props
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data.shop);
       } catch (error) {
@@ -19,11 +16,10 @@ const Slider = () => {
       }
     };
 
-    // Only fetch if shopId is available (i.e., the component is loaded with the shopId)
     if (shopId) {
       fetchShop();
     }
-  }, [shopId]); // Ensure useEffect re-runs when shopId changes
+  }, [shopId]);
 
   return (
     <div

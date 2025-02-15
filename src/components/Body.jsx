@@ -13,9 +13,8 @@ const Body = ({
   setSelectedAddOns,
   handleDuplicateAdd,
   handleDuplicateQuantityChangeGlobal,
+  shopId,
 }) => {
-  const { shopId } = useParams(); // Get shopId from the URL dynamically
-
   const [addOns, setAddOns] = useState([]);
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
@@ -35,7 +34,7 @@ const Body = ({
 
     const fetchAddOns = async () => {
       try {
-        const response = await api.get(`/addOns?${shopId}`); // Use dynamic shopId
+        const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
         setAddOns(response.data);
       } catch (error) {
         console.error("Error fetching add-ons:", error);

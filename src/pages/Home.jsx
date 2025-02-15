@@ -1,10 +1,12 @@
 // src/pages/Home.js
 import React, { useState } from "react";
+import { useParams } from "react-router-dom"; // Import useParams
 import Slider from "../components/Slider";
 import Body from "../components/Body";
 import WhatsAppButton from "../components/WhatsAppButton";
 
 const Home = () => {
+  const { shopId } = useParams(); // Extract shopId from the URL
   const [quantities, setQuantities] = useState({});
   const [category, setCategory] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
@@ -110,8 +112,10 @@ const Home = () => {
 
   return (
     <>
-      <Slider />
+      {/* Pass shopId as a prop to children components */}
+      <Slider shopId={shopId} />
       <Body
+        shopId={shopId}
         handleQuantityChange={handleQuantityChange}
         quantities={quantities}
         setCategory={setCategory}
@@ -124,6 +128,7 @@ const Home = () => {
         }
       />
       <WhatsAppButton
+        shopId={shopId}
         addedProducts={addedProducts}
         total={total}
         quantity={quantity}

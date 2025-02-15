@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
-import { NavLink, useParams } from "react-router-dom"; // Import useParams
+import { NavLink } from "react-router-dom"; // Import useParams
 import "../style/Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ shopId }) => {
   const [shop, setShop] = useState(null);
-  const { shopId } = useParams(); // Get shopId from the URL
 
   useEffect(() => {
     const fetchShop = async () => {
