@@ -12,8 +12,6 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />{" "}
-        {/* Default Home without shopId */}
         <Route path="/:shopId" element={<Home />} />
         <Route path="/about/:shopId" element={<AboutUs />} />
         <Route path="/admin-login" element={<AdminLogin />} />

@@ -11,7 +11,7 @@ api.interceptors.request.use(
   (config) => {
     const shopId = window.location.pathname.split("/")[1]; // Get shop_id from URL
     if (shopId) {
-      config.params = { ...config.params, shopId };
+      config.params = { shopId };
     }
     console.log("Extracted shopId:", shopId);
     console.log("Request config:", config);
