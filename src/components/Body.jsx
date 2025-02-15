@@ -35,7 +35,7 @@ const Body = ({
 
     const fetchAddOns = async () => {
       try {
-        const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
+        const response = await api.get(`/addOns?${shopId}`); // Use dynamic shopId
         setAddOns(response.data);
       } catch (error) {
         console.error("Error fetching add-ons:", error);

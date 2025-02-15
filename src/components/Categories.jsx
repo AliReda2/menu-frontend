@@ -10,7 +10,7 @@ const Categories = ({ onCategoryClick }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get(`/categories?shop_id=${shopId}`); // Use dynamic shopId
+        const response = await api.get(`/categories?${shopId}`); // Use dynamic shopId
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
