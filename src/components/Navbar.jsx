@@ -49,14 +49,14 @@ const Navbar = () => {
             Feedback
           </NavLink>
         </li> */}
-        {/* <li>
+        <li>
           <NavLink
             to="/admin-login"
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Admin Panel
           </NavLink>
-        </li> */}
+        </li>
       </ul>
     </nav>
   );
