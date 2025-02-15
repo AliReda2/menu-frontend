@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AboutUs from "./pages/About";
@@ -13,16 +8,15 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-  const { shopId } = useParams(); // Extract shopId from the URL
   return (
     <Router>
-      <Navbar shopId={shopId} />
       <Routes>
-        <Route path={`/:${shopId}`} element={<Home />} />
-        <Route path={`/about/:${shopId}`} element={<AboutUs />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
+        {/* The `shopId` is a dynamic parameter for Home */}
+        <Route path="/:shopId" element={<Navbar />} />
+        <Route path="/:shopId" element={<Home />} />
+        <Route path="/about/:shopId" element={<AboutUs />} />
         <Route
-          path={`/admin/:${shopId}`}
+          path="/admin/:shopId"
           element={
             <ProtectedRoute>
               <AdminDashboard />
