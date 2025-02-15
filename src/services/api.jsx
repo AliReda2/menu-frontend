@@ -11,8 +11,9 @@ api.interceptors.request.use(
   (config) => {
     const shopId = window.location.pathname.split("/")[1]; // Get shop_id from URL
     if (shopId && (!config.params || !config.params.shop_id)) {
-      config.params = { ...config.params, shopId }; // Ensure shop_id is only added once
+      config.params = { ...config.params, shop_id: shopId };
     }
+    console.log("Extracted shopId:", shopId);
     return config;
   },
   (error) => Promise.reject(error)
