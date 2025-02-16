@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../style/AdminLogin.css";
 
-
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,28 +13,30 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send login credentials to the backend
       const response = await api.post("/users/login", {
         name: username,
         password: password,
       });
 
+      console.log("Login response:", response.data); // Debugging
+
       if (response.data.success) {
-        // Extract shop_id from response.data.user.shop_id instead of response.data.shop_id
-        const shopId = response.data.user.shop_id;
+        const shopId = response.data.user?.shop_id; // Use optional chaining to avoid errors
+
         if (shopId) {
           localStorage.setItem("shop_id", shopId);
-          // console.log("Saved shop_id:", shopId); // This should now log a valid value
+          localStorage.setItem("isAdminAuthenticated", "true"); // Store login state
+          console.log("Redirecting to:", `/admin/${shopId}`); // Debugging
+          navigate(`/admin/${shopId}`); // Redirect to the correct route
         } else {
           console.error("No shop_id found in response:", response.data);
+          setErrorMessage("Shop ID not found. Please contact support.");
         }
-        localStorage.setItem("isAdminAuthenticated", "true"); // Store login state
-        navigate("/admin/" + shopId); // Redirect to the admin dashboard
       } else {
         setErrorMessage("Invalid username or password");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Login error:", error);
       setErrorMessage("Something went wrong");
     }
   };
