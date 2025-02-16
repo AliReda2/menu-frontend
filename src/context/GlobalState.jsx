@@ -1,11 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { GlobalProvider } from "./context/GlobalState"; // Import GlobalProvider
+import React, { createContext, useContext, useState } from "react";
 
-ReactDOM.render(
-  <GlobalProvider>
-    <App />
-  </GlobalProvider>,
-  document.getElementById("root")
-);
+const GlobalContext = createContext();
+
+export const GlobalProvider = ({ children }) => {
+  const [globalNumber, setGlobalNumber] = useState(null);
+
+  return (
+    <GlobalContext.Provider value={{ globalNumber, setGlobalNumber }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
+
+export const useGlobalState = () => useContext(GlobalContext);
