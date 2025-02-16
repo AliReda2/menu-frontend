@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
-import { NavLink, useParams } from "react-router-dom"; // Import useParams
+import { NavLink } from "react-router-dom"; // Import useParams
 import "../style/Navbar.css";
-import { useGlobalState } from "../context/GlobalState";
 
-const Navbar = () => {
+const Navbar = ({ shopId }) => {
   const [shop, setShop] = useState(null);
-  const { setGlobalNumber } = useGlobalState(); // Access global state setter
-  const { shopId } = useParams(); // Get shopId from URL
-
-  // Update the global state with shopId if available
-  useEffect(() => {
-    if (shopId) {
-      setGlobalNumber(Number(shopId)); // Store shopId in global state
-    }
-  }, [shopId, setGlobalNumber]);
 
   // Fetch shop details based on shopId
   useEffect(() => {

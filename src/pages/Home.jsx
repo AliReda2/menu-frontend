@@ -1,17 +1,26 @@
 // src/pages/Home.js
 import React, { useState } from "react";
+import { useParams } from "react-router-dom"; // Import useParams
+
+import Navbar from "./components/Navbar";
+
 import Slider from "../components/Slider";
 import Body from "../components/Body";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { useGlobalState } from "../context/GlobalState";
 
 const Home = () => {
-  const { shopId } = useGlobalState();
-  const [quantities, setQuantities] = useState({});
+  const { setGlobalNumber } = useGlobalState(); // Access global state setter
+  const { shopId } = useParams(); // Get shopId from URL  const [quantities, setQuantities] = useState({});
   const [category, setCategory] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
   const [selectedAddOns, setSelectedAddOns] = useState({});
 
+  useEffect(() => {
+    if (shopId) {
+      setGlobalNumber(Number(shopId)); // Store shopId in global state
+    }
+  }, [shopId, setGlobalNumber]);
   // Handles quantity changes for original products.
   const handleQuantityChange = (productId, delta, product) => {
     setQuantities((prevState) => {
@@ -112,6 +121,8 @@ const Home = () => {
 
   return (
     <>
+      <Navbar shopId={shopId} />
+
       {/* Pass shopId as a prop to children components */}
       <Slider shopId={shopId} />
       <Body
