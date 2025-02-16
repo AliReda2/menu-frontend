@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState"; // ✅ Import global state
-import ShopUpdate from "../components/admin/ShopUpdate";
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
@@ -48,11 +47,6 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <ShopUpdate
-        shopId={shopId}
-        shopData={shopData}
-        onShopUpdate={fetchShop}
-      />
       <CategoryManager shopId={shopId} />
       <ProductManager shopId={shopId} />
       <AddOnManager shopId={shopId} />
