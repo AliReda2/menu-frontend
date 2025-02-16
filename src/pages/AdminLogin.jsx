@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../style/AdminLogin.css";
 
+
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +30,7 @@ const AdminLogin = () => {
           console.error("No shop_id found in response:", response.data);
         }
         localStorage.setItem("isAdminAuthenticated", "true"); // Store login state
-        navigate("/admin");
+        navigate("/admin/" + shopId); // Redirect to the admin dashboard
       } else {
         setErrorMessage("Invalid username or password");
       }
