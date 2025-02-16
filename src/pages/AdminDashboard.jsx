@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState"; // ✅ Import global state
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
@@ -9,16 +8,8 @@ import api from "../services/api";
 import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
-  const { shopId } = useParams();
-  const { setGlobalNumber } = useGlobalState(); // ✅ Use global state
+  const { shopId } = useGlobalState(); // ✅ Use global state
   const [error, setError] = useState("");
-
-  // ✅ Store shopId globally
-  useEffect(() => {
-    if (shopId) {
-      setGlobalNumber(Number(shopId)); // Store as a number
-    }
-  }, [shopId, setGlobalNumber]);
 
   // Fetch shop details and pass them down to ShopUpdate
   const fetchShop = async () => {
