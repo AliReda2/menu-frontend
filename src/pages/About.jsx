@@ -5,6 +5,8 @@ import L from "leaflet";
 import api from "../services/api";
 import "../style/AboutUs.css";
 import { useGlobalState } from "../context/GlobalState";
+import Navbar from "../components/Navbar";
+
 
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({

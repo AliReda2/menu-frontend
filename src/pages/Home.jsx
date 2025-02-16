@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
 
-import Navbar from "../components/Navbar";
 import Slider from "../components/Slider";
 import Body from "../components/Body";
 import WhatsAppButton from "../components/WhatsAppButton";
@@ -121,7 +120,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar shopId={shopId} />
       {/* Pass shopId as a prop to children components */}
       <Slider shopId={shopId} />
       <Body
