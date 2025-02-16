@@ -30,7 +30,7 @@ const Navbar = ({ shopId }) => {
       <ul className="nav-links">
         <li>
           <NavLink
-            to={`/${shopId}`} // This ensures the current shopId is included in the URL
+            to={`/`} // This ensures the current shopId is included in the URL
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
@@ -38,7 +38,7 @@ const Navbar = ({ shopId }) => {
         </li>
         <li>
           <NavLink
-            to={`/about/${shopId}`} // Include shopId in the About Us link
+            to={`/about`} // Include shopId in the About Us link
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             About Us
