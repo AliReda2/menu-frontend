@@ -10,8 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Routes>
-        <Navbar />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/admin-login" element={<AdminLogin />} />
