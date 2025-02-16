@@ -1,5 +1,5 @@
 // src/pages/Home.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
 
 import Navbar from "../components/Navbar";
