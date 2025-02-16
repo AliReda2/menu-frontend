@@ -6,7 +6,14 @@ import { useGlobalState } from "../context/GlobalState";
 
 const Navbar = () => {
   const [shop, setShop] = useState(null);
-  const { shopId } = useGlobalState();
+  const { setGlobalNumber } = useGlobalState(); // Access global state setter
+  const { shopId } = useParams(); // Get shopId from URL
+  // Update the global state with shopId
+  useEffect(() => {
+    if (shopId) {
+      setGlobalNumber(Number(shopId)); // Store shopId in global state
+    }
+  }, [shopId, setGlobalNumber]);
 
   useEffect(() => {
     const fetchShop = async () => {

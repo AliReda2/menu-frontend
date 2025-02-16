@@ -12,11 +12,11 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/:shopId" element={<Home />} />
-        <Route path="/about/:shopId" element={<AboutUs />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route
-          path="/admin/:shopId"
+          path="/admin"
           element={
             <ProtectedRoute>
               <AdminDashboard />
