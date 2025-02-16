@@ -1,12 +1,12 @@
 // src/pages/Home.js
 import React, { useState } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
 import Slider from "../components/Slider";
 import Body from "../components/Body";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { useGlobalState } from "../context/GlobalState";
 
 const Home = () => {
-  const { shopId } = useParams(); // Extract shopId from the URL
+  const { shopId } = useGlobalState();
   const [quantities, setQuantities] = useState({});
   const [category, setCategory] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);

@@ -1,5 +1,6 @@
-// src/components/AdminDashboard.js
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGlobalState } from "../context/GlobalState"; // ✅ Import global state
 import ShopUpdate from "../components/admin/ShopUpdate";
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
@@ -7,12 +8,19 @@ import AddOnManager from "../components/admin/AddOnManager";
 import AboutUsUpdate from "../components/admin/AboutUsUpdate";
 import api from "../services/api";
 import "../style/AdminDashboard.css";
-import { useParams } from "react-router-dom";
 
 const AdminDashboard = () => {
   const { shopId } = useParams();
+  const { setGlobalNumber } = useGlobalState(); // ✅ Use global state
   const [shopData, setShopData] = useState({ name: "", description: "" });
   const [error, setError] = useState("");
+
+  // ✅ Store shopId globally
+  useEffect(() => {
+    if (shopId) {
+      setGlobalNumber(Number(shopId)); // Store as a number
+    }
+  }, [shopId, setGlobalNumber]);
 
   // Fetch shop details and pass them down to ShopUpdate
   const fetchShop = async () => {

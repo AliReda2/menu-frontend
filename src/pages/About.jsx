@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import api from "../services/api";
 import "../style/AboutUs.css";
-import { useParams } from "react-router-dom";
+import { useGlobalState } from "../context/GlobalState";
 
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({
@@ -20,7 +20,7 @@ const customIcon = new L.Icon({
 
 const AboutUs = () => {
   const [data, setData] = useState("");
-  const { shopId } = useParams();
+  const { shopId } = useGlobalState();
 
   useEffect(() => {
     const fetchAboutUs = async () => {
