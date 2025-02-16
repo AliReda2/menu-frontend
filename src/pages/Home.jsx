@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
 
-import Navbar from "./components/Navbar";
+import Navbar from "./Navbar";
 
 import Slider from "../components/Slider";
 import Body from "../components/Body";
