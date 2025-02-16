@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
-import { NavLink, useParams } from "react-router-dom"; // Import useParams
+import { NavLink } from "react-router-dom"; // Import useParams
 import "../style/Navbar.css";
+import { useGlobalState } from "../context/GlobalState";
 
 const Navbar = () => {
   const [shop, setShop] = useState(null);
-  const { shopId } = useParams(); // Extract shopId from URL
-
+  const { shopId } = useGlobalState();
 
   useEffect(() => {
     const fetchShop = async () => {
