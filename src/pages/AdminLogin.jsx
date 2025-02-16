@@ -21,7 +21,7 @@ const AdminLogin = () => {
       console.log("Login response:", response.data); // Debugging
 
       if (response.data.success) {
-        const shopId = response.data.user?.shop_id; // Use optional chaining to avoid errors
+        const shopId = response.data.user.shop_id; // Use optional chaining to avoid errors
 
         if (shopId) {
           localStorage.setItem("shop_id", shopId);

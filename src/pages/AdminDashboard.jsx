@@ -11,7 +11,6 @@ import "../style/AdminDashboard.css";
 const AdminDashboard = () => {
   const { shopId } = useParams();
   const { setGlobalNumber } = useGlobalState(); // ✅ Use global state
-  const [shopData, setShopData] = useState({ name: "", description: "" });
   const [error, setError] = useState("");
 
   // ✅ Store shopId globally
@@ -24,6 +23,7 @@ const AdminDashboard = () => {
   // Fetch shop details and pass them down to ShopUpdate
   const fetchShop = async () => {
     try {
+      console.log("Fetching shop data for shopId:", shopId); // Debugging
       const response = await api.get(`/shops/${shopId}`);
       const shop = response.data.shop;
       setShopData({
@@ -38,9 +38,11 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (shopId) {
-      fetchShop();
+    if (!shopId) {
+      setError("Shop ID is missing.");
+      return;
     }
+    fetchShop();
   }, [shopId]);
 
   return (
