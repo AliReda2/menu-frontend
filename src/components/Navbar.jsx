@@ -18,7 +18,7 @@ const Navbar = () => {
     const fetchShop = async () => {
       try {
         const response = await api.get(`/shops/${shopId}`);
-        setShop(response.data.shop);
+        setShop(response.data);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
