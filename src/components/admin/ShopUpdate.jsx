@@ -5,6 +5,7 @@ const ShopUpdate = ({ shopId }) => {
   const [shopName, setShopName] = useState("");
   const [shopDescription, setShopDescription] = useState("");
   const [shopImage, setShopImage] = useState(null);
+  const [originalImage, setOriginalImage] = useState(null); // Store the original image URL
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,6 +18,7 @@ const ShopUpdate = ({ shopId }) => {
       setShopName(shop.name || "");
       setShopDescription(shop.description || "");
       setShopImage(shop.image || null);
+      setOriginalImage(shop.image || null); // Store the original image URL
       setLoading(false);
     } catch (err) {
       console.error("Error fetching shop:", err);
@@ -33,16 +35,32 @@ const ShopUpdate = ({ shopId }) => {
 
   // Handle the update of the shop
   const handleUpdateShop = async () => {
-    if (!shopName.trim() || !shopDescription.trim()) {
-      setError("Both shop name and description are required.");
+    if (!shopName.trim() && !shopDescription.trim() && !shopImage) {
+      setError(
+        "At least one field (name, description, or image) must be provided."
+      );
       return;
     }
 
     try {
       const formData = new FormData();
-      formData.append("name", shopName.trim());
-      formData.append("description", shopDescription.trim());
-      if (shopImage) formData.append("image", shopImage); // Only append image if present
+
+      // Only append fields that have changed
+      if (
+        shopName.trim() !== "" &&
+        shopName !== (originalImage ? shopName : "")
+      ) {
+        formData.append("name", shopName.trim());
+      }
+      if (
+        shopDescription.trim() !== "" &&
+        shopDescription !== (originalImage ? shopDescription : "")
+      ) {
+        formData.append("description", shopDescription.trim());
+      }
+      if (shopImage && shopImage !== originalImage) {
+        formData.append("image", shopImage); // Only append image if it's updated
+      }
 
       await api.patch(`/shops/${shopId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -94,9 +112,13 @@ const ShopUpdate = ({ shopId }) => {
       <button onClick={handleUpdateShop}>Update Shop</button>
 
       <h3>Current Shop Image</h3>
-      {shopImage ? (
+      {shopImage || originalImage ? (
         <img
-          src={`https://menu-backend-rnpu.onrender.com/${shopImage}`}
+          src={
+            shopImage
+              ? URL.createObjectURL(shopImage)
+              : `https://menu-backend-rnpu.onrender.com/${originalImage}`
+          }
           alt="Shop Image"
           width="100"
         />
