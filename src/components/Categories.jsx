@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import "../style/Categories.css";
 
-const Categories = ({ onCategoryClick,  shopId  }) => {
+const Categories = ({ onCategoryClick, shopId }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const Categories = ({ onCategoryClick,  shopId  }) => {
           onClick={() => onCategoryClick(category.id)}
         >
           <img
-            src={`https://menu-backend-rnpu.onrender.com/${category.image}`}
+            src={`https://drive.google.com/uc?export=view&id=1huKmYhbxJgxlY5KV-bM9U9Ig59yxF-RO
+`}
             alt={category.name}
             width="50"
           />
