@@ -18,6 +18,7 @@ const Body = ({
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState(null);
+  console.log("Body shopId:", shopId);
 
   useEffect(() => {
     if (!shopId) return; // Ensure shopId is available before making API calls
