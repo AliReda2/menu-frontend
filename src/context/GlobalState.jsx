@@ -1,15 +1,19 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-const GlobalContext = createContext();
+const GlobalStateContext = createContext();
 
-export const GlobalProvider = ({ children }) => {
-  const [globalNumber, setGlobalNumber] = useState(null);
+export const GlobalStateProvider = ({ children }) => {
+  const [shopId, setShopId] = useState(null);
+
+  useEffect(() => {
+    console.log("GlobalState Updated: shopId =", shopId);
+  }, [shopId]);
 
   return (
-    <GlobalContext.Provider value={{ globalNumber, setGlobalNumber }}>
+    <GlobalStateContext.Provider value={{ shopId, setShopId }}>
       {children}
-    </GlobalContext.Provider>
+    </GlobalStateContext.Provider>
   );
 };
 
-export const useGlobalState = () => useContext(GlobalContext);
+export const useGlobalState = () => useContext(GlobalStateContext);

@@ -6,7 +6,6 @@ import api from "../services/api";
 import "../style/AboutUs.css";
 import { useGlobalState } from "../context/GlobalState";
 
-
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({
   iconUrl:
@@ -22,6 +21,7 @@ const customIcon = new L.Icon({
 const AboutUs = () => {
   const [data, setData] = useState("");
   const { shopId } = useGlobalState();
+  console.log("AboutUs shopId:", shopId);
 
   useEffect(() => {
     const fetchAboutUs = async () => {

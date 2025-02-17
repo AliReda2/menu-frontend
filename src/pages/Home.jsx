@@ -7,18 +7,20 @@ import WhatsAppButton from "../components/WhatsAppButton";
 import { useGlobalState } from "../context/GlobalState";
 
 const Home = () => {
-  const { setGlobalNumber } = useGlobalState(); // Access global state setter
-  const { shopId } = useParams(); // Get shopId from URL
   const [quantities, setQuantities] = useState({});
   const [category, setCategory] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
   const [selectedAddOns, setSelectedAddOns] = useState({});
 
+  const { shopId, setShopId } = useGlobalState();
+  const { shopId: paramShopId } = useParams(); // Get shopId from URL
+
   useEffect(() => {
-    if (shopId) {
-      setGlobalNumber(Number(shopId)); // Store shopId in global state
+    if (paramShopId) {
+      setShopId(paramShopId);
+      console.log("Setting shopId:", paramShopId);
     }
-  }, [shopId, setGlobalNumber]);
+  }, [paramShopId]);
 
   // Handles quantity changes for original products.
   const handleQuantityChange = (productId, delta, product) => {
