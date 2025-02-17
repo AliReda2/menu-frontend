@@ -24,8 +24,6 @@ const Navbar = () => {
     fetchShop();
   }, [shopId]); // Re-fetch when shopId changes
 
-  if (!shopId) return null; // If no shopId in URL, return nothing or handle accordingly
-
   return (
     <nav className="navbar">
       <div className="logo">{shop ? shop.name : "Loading..."}</div>
