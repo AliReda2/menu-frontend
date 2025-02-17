@@ -102,10 +102,7 @@ const ShopUpdate = ({ shopId }) => {
 
       <div>
         <label>Shop Image</label>
-        <input
-          type="file"
-          onChange={(e) => setShopImage(e.target.files[0])}
-        />
+        <input type="file" onChange={(e) => setShopImage(e.target.files[0])} />
       </div>
 
       <button onClick={handleUpdateShop}>Update Shop</button>
@@ -114,8 +111,10 @@ const ShopUpdate = ({ shopId }) => {
       {shopImage || originalImage ? (
         <img
           src={
-            shopImage
+            shopImage instanceof File
               ? URL.createObjectURL(shopImage)
+              : shopImage
+              ? `https://menu-backend-rnpu.onrender.com/${shopImage}`
               : `https://menu-backend-rnpu.onrender.com/${originalImage}`
           }
           alt="Shop Image"
