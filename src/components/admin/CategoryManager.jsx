@@ -36,9 +36,7 @@ const CategoryManager = ({ shopId }) => {
       formData.append("shop_id", shopId);
       if (categoryImage) formData.append("image", categoryImage);
 
-      await api.post("/categories", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await api.post("/categories", formData);
 
       alert("Category added successfully");
       setCategoryName("");
