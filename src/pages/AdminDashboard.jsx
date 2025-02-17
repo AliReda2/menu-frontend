@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useGlobalState } from "../context/GlobalState"; // ✅ Import global state
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
@@ -8,7 +7,7 @@ import api from "../services/api";
 import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
-  const { shopId } = useGlobalState(); // ✅ Use global state
+  const shopId = localStorage.getItem("shop_id");
   const [error, setError] = useState("");
 
   // Fetch shop details and pass them down to ShopUpdate

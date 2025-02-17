@@ -26,8 +26,8 @@ const AdminLogin = () => {
         if (shopId) {
           localStorage.setItem("shop_id", shopId);
           localStorage.setItem("isAdminAuthenticated", "true"); // Store login state
-          console.log("Redirecting to:", `/admin/${shopId}`); // Debugging
-          navigate(`/admin/${shopId}`); // Redirect to the correct route
+          // console.log("Redirecting to:", `/admin/${shopId}`); // Debugging
+          navigate(`/admin`); // Redirect to the correct route
         } else {
           console.error("No shop_id found in response:", response.data);
           setErrorMessage("Shop ID not found. Please contact support.");
