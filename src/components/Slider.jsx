@@ -6,11 +6,11 @@ const Slider = ({ shopId }) => {
   const [shop, setShop] = useState("");
 
   useEffect(() => {
+    if (!shopId) {
+      console.log("shopId is not set yet. Skipping API call.");
+      return;
+    }
     const fetchShop = async () => {
-      if (!shopId) {
-        console.log("shopId is not set yet. Skipping API call.");
-        return;
-      }
       try {
         // Fetch shop data using the shopId passed in props
         const response = await api.get(`/shops/${shopId}`);

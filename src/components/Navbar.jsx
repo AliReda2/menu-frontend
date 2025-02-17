@@ -11,6 +11,10 @@ const Navbar = () => {
 
   // Fetch shop details based on shopId
   useEffect(() => {
+    if (shopId === null) {
+      console.log("shopId is null, skipping API call.");
+      return;
+    }
     const fetchShop = async () => {
       try {
         const response = await api.get(`/shops/${shopId}`);
