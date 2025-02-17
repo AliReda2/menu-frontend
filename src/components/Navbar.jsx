@@ -11,8 +11,6 @@ const Navbar = () => {
   // Fetch shop details based on shopId
   useEffect(() => {
     const fetchShop = async () => {
-      if (!shopId) return; // Prevent fetch if shopId is undefined
-
       try {
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data.shop);
@@ -30,7 +28,7 @@ const Navbar = () => {
       <ul className="nav-links">
         <li>
           <NavLink
-            to={`/`} // This ensures the current shopId is included in the URL
+            to={`/${shopId}`} // This ensures the current shopId is included in the URL
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
