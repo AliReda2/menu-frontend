@@ -14,7 +14,7 @@ const Slider = ({ shopId }) => {
       try {
         // Fetch shop data using the shopId passed in props
         const response = await api.get(`/shops/${shopId}`);
-        setShop(response.data.shop);
+        setShop(response.data);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
