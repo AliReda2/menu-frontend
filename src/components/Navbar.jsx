@@ -6,7 +6,7 @@ import { useGlobalState } from "../context/GlobalState";
 
 const Navbar = () => {
   const { shopId } = useGlobalState();
-  console.log("Navbar shopId:", shopId);
+  // console.log("Navbar shopId:", shopId);
   const [shop, setShop] = useState(null);
 
   // Fetch shop details based on shopId

@@ -21,7 +21,7 @@ const customIcon = new L.Icon({
 const AboutUs = () => {
   const [data, setData] = useState("");
   const { shopId } = useGlobalState();
-  console.log("AboutUs shopId:", shopId);
+  // console.log("AboutUs shopId:", shopId);
 
   useEffect(() => {
     const fetchAboutUs = async () => {

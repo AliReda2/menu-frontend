@@ -18,7 +18,7 @@ const Body = ({
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState(null);
-  console.log("Body shopId:", shopId);
+  // console.log("Body shopId:", shopId);
 
   useEffect(() => {
     if (!shopId) {
