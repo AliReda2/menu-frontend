@@ -21,8 +21,10 @@ const Body = ({
   console.log("Body shopId:", shopId);
 
   useEffect(() => {
-    if (!shopId) return; // Ensure shopId is available before making API calls
-
+    if (!shopId) {
+      console.log("shopId is not set yet. Skipping API call.");
+      return;
+    }
     const fetchShop = async () => {
       try {
         const response = await api.get(`/shops/${shopId}`); // Use dynamic shopId

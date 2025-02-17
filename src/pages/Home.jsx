@@ -120,6 +120,10 @@ const Home = () => {
     0
   );
 
+  if (!shopId) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       {/* Pass shopId as a prop to children components */}
