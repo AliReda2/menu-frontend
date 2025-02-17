@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/:shopId" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
@@ -23,7 +24,6 @@ const App = () => {
           }
         />
       </Routes>
-      <Navbar />
     </Router>
   );
 };
