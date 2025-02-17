@@ -5,10 +5,14 @@ const GlobalStateContext = createContext();
 export const GlobalStateProvider = ({ children }) => {
   const [shopId, setShopIdInternal] = useState(null);
 
-  // Custom setter that only accepts non-null numbers
   const setShopId = (value) => {
-    if (value !== null && typeof value === "number") {
-      setShopIdInternal(value);
+    if (value === null) {
+      console.warn("Invalid shopId value. It must be a non-null number.");
+      return;
+    }
+    const parsedValue = typeof value === "string" ? Number(value) : value;
+    if (typeof parsedValue === "number" && !isNaN(parsedValue)) {
+      setShopIdInternal(parsedValue);
     } else {
       console.warn("Invalid shopId value. It must be a non-null number.");
     }
