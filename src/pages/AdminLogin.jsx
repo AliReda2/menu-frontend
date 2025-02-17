@@ -23,7 +23,6 @@ const AdminLogin = () => {
         const shopId = response.data.user?.shop_id; // Optional chaining to avoid errors
 
         if (shopId) {
-          localStorage.setItem("shop_id", shopId);
           localStorage.setItem("isAdminAuthenticated", "true");
           navigate(`/admin`);
         } else {

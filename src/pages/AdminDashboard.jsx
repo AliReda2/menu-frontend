@@ -9,17 +9,20 @@ import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const shopId = localStorage.getItem("shop_id");
+  const isAdminAuthenticated = localStorage.getItem("isAdminAuthenticated");
   const navigate = useNavigate();
-  const [shopData, setShopData] = useState({ name: "", description: "" });
   const [error, setError] = useState("");
+  const [shopData, setShopData] = useState({ name: "", description: "" });
 
   useEffect(() => {
-    if (!shopId) {
-      setError("Shop ID is missing.");
-      navigate("/admin/login"); // Redirect to login
+    // Early return if not authenticated
+    if (!shopId || !isAdminAuthenticated) {
+      setError("Not authenticated. Please login.");
+      navigate("/admin-login"); // Redirect to login
       return;
     }
 
+    // Fetch shop data
     const fetchShop = async () => {
       try {
         console.log("Fetching shop data for shopId:", shopId);
@@ -29,7 +32,7 @@ const AdminDashboard = () => {
           name: shop.name || "",
           description: shop.description || "",
         });
-        setError("");
+        setError(""); // Reset error state if the shop is fetched successfully
       } catch (err) {
         console.error("Error fetching shop:", err);
         setError(err.response?.data?.error || "Failed to load shop.");
@@ -37,12 +40,14 @@ const AdminDashboard = () => {
     };
 
     fetchShop();
-  }, [shopId, navigate]);
+  }, [shopId, isAdminAuthenticated, navigate]); // Add isAdminAuthenticated as dependency
 
   return (
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <h2>{shopData.name}</h2>
+      <p>{shopData.description}</p>
       <CategoryManager shopId={shopId} />
       <ProductManager shopId={shopId} />
       <AddOnManager shopId={shopId} />
