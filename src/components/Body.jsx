@@ -28,7 +28,7 @@ const Body = ({
     const fetchShop = async () => {
       try {
         const response = await api.get(`/shops/${shopId}`); // Use dynamic shopId
-        setCategory(response.data.shop.categories);
+        setCategory(response.data.categories);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
