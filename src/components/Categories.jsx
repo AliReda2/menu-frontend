@@ -21,11 +21,6 @@ const Categories = ({ onCategoryClick,  shopId  }) => {
   return (
     <div className="categories">
       <div className="category-box" onClick={() => onCategoryClick(null)}>
-        {/* <img
-          src="https://via.placeholder.com/50"
-          alt="All Categories"
-          width="50"
-        /> */}
         <span style={{ color: "black", fontSize: "x-Large" }}>
           All Categories
         </span>
