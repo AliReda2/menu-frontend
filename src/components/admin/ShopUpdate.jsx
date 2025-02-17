@@ -104,7 +104,6 @@ const ShopUpdate = ({ shopId }) => {
         <label>Shop Image</label>
         <input
           type="file"
-          accept="image/*"
           onChange={(e) => setShopImage(e.target.files[0])}
         />
       </div>
