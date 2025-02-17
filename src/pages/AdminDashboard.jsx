@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
@@ -8,32 +9,35 @@ import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const shopId = localStorage.getItem("shop_id");
+  const navigate = useNavigate();
+  const [shopData, setShopData] = useState({ name: "", description: "" });
   const [error, setError] = useState("");
-
-  // Fetch shop details and pass them down to ShopUpdate
-  const fetchShop = async () => {
-    try {
-      console.log("Fetching shop data for shopId:", shopId); // Debugging
-      const response = await api.get(`/shops/${shopId}`);
-      const shop = response.data.shop;
-      setShopData({
-        name: shop.name || "",
-        description: shop.description || "",
-      });
-      setError("");
-    } catch (err) {
-      console.error("Error fetching shop:", err);
-      setError("Failed to load shop.");
-    }
-  };
 
   useEffect(() => {
     if (!shopId) {
       setError("Shop ID is missing.");
+      navigate("/admin/login"); // Redirect to login
       return;
     }
+
+    const fetchShop = async () => {
+      try {
+        console.log("Fetching shop data for shopId:", shopId);
+        const response = await api.get(`/shops/${shopId}`);
+        const shop = response.data.shop;
+        setShopData({
+          name: shop.name || "",
+          description: shop.description || "",
+        });
+        setError("");
+      } catch (err) {
+        console.error("Error fetching shop:", err);
+        setError(err.response?.data?.error || "Failed to load shop.");
+      }
+    };
+
     fetchShop();
-  }, [shopId]);
+  }, [shopId, navigate]);
 
   return (
     <div className="admin-dashboard">

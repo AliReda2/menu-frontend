@@ -7,7 +7,6 @@ const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,15 +17,15 @@ const AdminLogin = () => {
         password: password,
       });
 
-      console.log("Login response:", response.data); // Debugging
+      console.log("Login response:", response.data);
 
       if (response.data.success) {
-        const shopId = response.data.user.shop_id; // Use optional chaining to avoid errors
+        const shopId = response.data.user?.shop_id; // Optional chaining to avoid errors
 
         if (shopId) {
           localStorage.setItem("shop_id", shopId);
-          localStorage.setItem("isAdminAuthenticated", "true"); // Store login state
-          navigate(`/admin`); // Redirect to the correct route
+          localStorage.setItem("isAdminAuthenticated", "true");
+          navigate(`/admin`);
         } else {
           console.error("No shop_id found in response:", response.data);
           setErrorMessage("Shop ID not found. Please contact support.");
@@ -36,7 +35,7 @@ const AdminLogin = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setErrorMessage("Something went wrong");
+      setErrorMessage(error.response?.data?.error || "Something went wrong");
     }
   };
 
