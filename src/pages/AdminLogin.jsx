@@ -17,7 +17,7 @@ const AdminLogin = () => {
         password: password,
       });
 
-      console.log("Login response:", response.data);
+      // console.log("Login response:", response.data);
 
       if (response.data.success) {
         const shopId = response.data.user?.shop_id; // Optional chaining to avoid errors

@@ -4,6 +4,7 @@ import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
 import AboutUsUpdate from "../components/admin/AboutUsUpdate";
+import ShopUpdate from "../components/admin/ShopUpdate";
 import api from "../services/api";
 import "../style/AdminDashboard.css";
 
@@ -25,7 +26,7 @@ const AdminDashboard = () => {
     // Fetch shop data
     const fetchShop = async () => {
       try {
-        console.log("Fetching shop data for shopId:", shopId);
+        // console.log("Fetching shop data for shopId:", shopId);
         const response = await api.get(`/shops/${shopId}`);
         const shop = response.data.shop;
         setShopData({
@@ -48,6 +49,7 @@ const AdminDashboard = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <h2>{shopData.name}</h2>
       <p>{shopData.description}</p>
+      <ShopUpdate shopId={shopId} />
       <CategoryManager shopId={shopId} />
       <ProductManager shopId={shopId} />
       <AddOnManager shopId={shopId} />

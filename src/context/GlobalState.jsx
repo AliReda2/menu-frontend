@@ -24,7 +24,7 @@ export const GlobalStateProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("GlobalState Updated: shopId =", shopId);
+    // console.log("GlobalState Updated: shopId =", shopId);
   }, [shopId]);
 
   return (
