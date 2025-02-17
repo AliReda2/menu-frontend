@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import AboutUs from "./pages/About";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -15,14 +14,7 @@ const App = () => {
         <Route path="/:shopId" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
