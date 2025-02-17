@@ -12,7 +12,7 @@ const Navbar = () => {
   // Fetch shop details based on shopId
   useEffect(() => {
     if (shopId === null) {
-      console.log("shopId is null, skipping API call.");
+      console.log("shopId is not set yet. Skipping API call.");
       return;
     }
     const fetchShop = async () => {

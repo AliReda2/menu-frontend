@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     if (paramShopId) {
       setShopId(paramShopId);
-      console.log("Setting shopId:", paramShopId);
+      // console.log("Setting shopId:", paramShopId);
     }
   }, [paramShopId]);
 
