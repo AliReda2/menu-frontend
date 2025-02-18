@@ -1,5 +1,3 @@
-// src/components/WhatsAppButton.js
-import React from "react";
 import "../style/WhatsAppButton.css";
 
 const WhatsAppButton = ({ addedProducts, quantity, total }) => {

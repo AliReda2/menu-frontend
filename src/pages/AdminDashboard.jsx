@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";

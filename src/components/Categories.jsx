@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
-import api from "../services/api";
 import "../style/Categories.css";
 
-const Categories = ({ onCategoryClick,  category  }) => {
-  // const [categories, setCategories] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await api.get(`/categories?shop_id=${shopId}`); // Use dynamic shopId
-  //       setCategories(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //     }
-  //   };
-
-  //   fetchCategories();
-  // }, []);
-
+const Categories = ({ onCategoryClick, category }) => {
   return (
     <div className="categories">
       <div className="category-box" onClick={() => onCategoryClick(null)}>
-        <span style={{ color: "black", fontSize: "x-Large" }}>
-          All
-        </span>
+        <span style={{ color: "black", fontSize: "x-Large" }}>All</span>
       </div>
       {category.map((category) => (
         <div
