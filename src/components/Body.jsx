@@ -20,8 +20,8 @@ const Body = ({
   const sectionRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState(null);
   setCategory(shop.categories);
-  console.log(shop);
-  console.log(category);
+  console.log("shop:"+ shop);
+  console.log("category:"+ category);
   useEffect(() => {
     if (!shopId) {
       console.log("shopId is not set yet. Skipping API call.");
