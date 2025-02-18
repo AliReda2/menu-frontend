@@ -35,6 +35,7 @@ const Home = () => {
         // Fetch shop data using the shopId passed in props
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data);
+        setCategory(response.data.categories)
         console.log(shop);
       } catch (error) {
         console.error("Error fetching shop:", error);
@@ -156,11 +157,9 @@ const Home = () => {
       {/* Pass shopId as a prop to children components */}
       <Slider shop={shop} />
       <Body
-        shop={shop}
         shopId={shopId}
         handleQuantityChange={handleQuantityChange}
         quantities={quantities}
-        setCategory={setCategory}
         category={category}
         selectedAddOns={selectedAddOns}
         setSelectedAddOns={setSelectedAddOns}
@@ -170,7 +169,6 @@ const Home = () => {
         }
       />
       <WhatsAppButton
-        shopId={shopId}
         addedProducts={addedProducts}
         total={total}
         quantity={quantity}

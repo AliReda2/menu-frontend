@@ -6,13 +6,11 @@ import Categories from "./Categories";
 const Body = ({
   handleQuantityChange,
   quantities,
-  setCategory,
   category,
   selectedAddOns,
   setSelectedAddOns,
   handleDuplicateAdd,
   handleDuplicateQuantityChangeGlobal,
-  shop,
   shopId,
 }) => {
   const [addOns, setAddOns] = useState([]);
@@ -25,7 +23,6 @@ const Body = ({
       return;
     }
 
-    setCategory(shop.categories);
     const fetchAddOns = async () => {
       try {
         const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
@@ -36,7 +33,7 @@ const Body = ({
     };
 
     fetchAddOns();
-  }, [shopId, setCategory]); // Ensure useEffect runs whenever shopId changes
+  }, [shopId]); // Ensure useEffect runs whenever shopId changes
 
   const handleAddOnChange = (product, addOnId) => {
     if (!addOnId) return; // "None" selected
