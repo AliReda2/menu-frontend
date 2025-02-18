@@ -16,7 +16,7 @@ const Home = () => {
   const { shopId, setShopId } = useGlobalState();
   const { shopId: paramShopId } = useParams(); // Get shopId from URL
 
-  const [shop, setShop] = useState("");
+  const [shop, setShop] = useState({});
 
   useEffect(() => {
     if (paramShopId) {
