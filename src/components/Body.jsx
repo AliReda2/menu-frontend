@@ -24,10 +24,8 @@ const Body = ({
       console.log("shopId is not set yet. Skipping API call.");
       return;
     }
-    
+
     setCategory(shop.categories);
-    console.log("shop:"+ shop);
-    console.log("category:"+ category);
     const fetchAddOns = async () => {
       try {
         const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
@@ -96,7 +94,7 @@ const Body = ({
     <div className="body">
       <Categories shopId={shopId} onCategoryClick={handleCategoryClick} />
       <h2 className="section-title">Our Specialties</h2>
-      {category
+      {(category || [])
         .filter((cat) => !activeCategory || cat.id === activeCategory)
         .map((cat) => (
           <div key={cat.id} ref={(el) => (sectionRefs.current[cat.id] = el)}>
