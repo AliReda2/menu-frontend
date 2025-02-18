@@ -18,15 +18,15 @@
 }
 
 .category-box {
-  position: relative; /* Ensure child elements are positioned relative to this box */
-  flex: 0 0 200px; /* Set a fixed width for swiper items */
-  height: 200px; /* Increase the size of the boxes */
+  position: relative;
+  flex: 0 0 150px; 
+  height: 150px; 
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  scroll-snap-align: start; /* Ensure boxes align when swiped */
+  /* scroll-snap-align: start; //Ensure boxes align when swiped */
 }
 
 .category-box:hover {
