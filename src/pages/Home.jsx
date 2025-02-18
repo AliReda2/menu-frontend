@@ -45,6 +45,9 @@ const Home = () => {
       fetchShop();
     }
   }, [shopId]);
+  useEffect(() => {
+    console.log("Updated shop state:", shop);
+  }, [shop]);
 
   // Handles quantity changes for original products.
   const handleQuantityChange = (productId, delta, product) => {
