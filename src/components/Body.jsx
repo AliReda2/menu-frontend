@@ -129,9 +129,28 @@ const Body = ({
                       <div className="product-details">
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
-                        <p className="price">
-                          ${Number(product.price).toFixed(2)}
-                        </p>
+                        <div>
+                          <p className="price">
+                            ${Number(product.price).toFixed(2)}
+                          </p>
+                          <div className="quantity-controls">
+                            <button
+                              onClick={() =>
+                                handleQuantityChange(product.id, -1, product)
+                              }
+                            >
+                              -
+                            </button>
+                            <span>{quantities[product.id] || 0}</span>
+                            <button
+                              onClick={() =>
+                                handleQuantityChange(product.id, 1, product)
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
                         <div>
                           <label htmlFor={`add-on-${product.id}`}>
                             Add On:
@@ -158,23 +177,6 @@ const Body = ({
                                 </option>
                               ))}
                           </select>
-                        </div>
-                        <div className="quantity-controls">
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(product.id, -1, product)
-                            }
-                          >
-                            -
-                          </button>
-                          <span>{quantities[product.id] || 0}</span>
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(product.id, 1, product)
-                            }
-                          >
-                            +
-                          </button>
                         </div>
                       </div>
                     </div>
