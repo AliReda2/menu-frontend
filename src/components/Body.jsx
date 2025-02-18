@@ -19,15 +19,15 @@ const Body = ({
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState(null);
-  setCategory(shop.categories);
-  console.log("shop:"+ shop);
-  console.log("category:"+ category);
   useEffect(() => {
     if (!shopId) {
       console.log("shopId is not set yet. Skipping API call.");
       return;
     }
-
+    
+    setCategory(shop.categories);
+    console.log("shop:"+ shop);
+    console.log("category:"+ category);
     const fetchAddOns = async () => {
       try {
         const response = await api.get(`/addOns?shop_id=${shopId}`); // Use dynamic shopId
