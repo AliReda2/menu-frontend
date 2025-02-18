@@ -37,7 +37,6 @@ const Body = ({
       }
     };
 
-    fetchShop();
     fetchAddOns();
   }, [shopId, setCategory]); // Ensure useEffect runs whenever shopId changes
 
