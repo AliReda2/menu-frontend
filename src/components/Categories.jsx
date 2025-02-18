@@ -22,7 +22,7 @@ const Categories = ({ onCategoryClick,  shopId  }) => {
     <div className="categories">
       <div className="category-box" onClick={() => onCategoryClick(null)}>
         <span style={{ color: "black", fontSize: "x-Large" }}>
-          All Categories
+          All
         </span>
       </div>
       {categories.map((category) => (
