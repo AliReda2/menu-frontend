@@ -15,12 +15,34 @@ const Home = () => {
   const { shopId, setShopId } = useGlobalState();
   const { shopId: paramShopId } = useParams(); // Get shopId from URL
 
+  const [shop, setShop] = useState("");
+
   useEffect(() => {
     if (paramShopId) {
       setShopId(paramShopId);
       // console.log("Setting shopId:", paramShopId);
     }
   }, [paramShopId]);
+
+  useEffect(() => {
+    if (!shopId) {
+      console.log("shopId is not set yet. Skipping API call.");
+      return;
+    }
+    const fetchShop = async () => {
+      try {
+        // Fetch shop data using the shopId passed in props
+        const response = await api.get(`/shops/${shopId}`);
+        setShop(response.data);
+      } catch (error) {
+        console.error("Error fetching shop:", error);
+      }
+    };
+
+    if (shopId) {
+      fetchShop();
+    }
+  }, [shopId]);
 
   // Handles quantity changes for original products.
   const handleQuantityChange = (productId, delta, product) => {
@@ -127,7 +149,7 @@ const Home = () => {
   return (
     <>
       {/* Pass shopId as a prop to children components */}
-      <Slider shopId={shopId} />
+      <Slider shop={shop} />
       <Body
         shopId={shopId}
         handleQuantityChange={handleQuantityChange}
