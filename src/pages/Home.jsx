@@ -35,6 +35,7 @@ const Home = () => {
         // Fetch shop data using the shopId passed in props
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data);
+        console.log(shop);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
