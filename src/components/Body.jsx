@@ -201,45 +201,48 @@ const Body = ({
                               {product.description && (
                                 <p>{product.description}</p>
                               )}
-                              <p className="price">
-                                $
-                                {(
-                                  Number(product.price) +
-                                  Number(dup.addOn.price)
-                                ).toFixed(2)}
-                              </p>
+                              <div>
+                                <p className="price">
+                                  $
+                                  {(
+                                    Number(product.price) +
+                                    Number(dup.addOn.price)
+                                  ).toFixed(2)}
+                                </p>
+
+                                <div className="quantity-controls">
+                                  <button
+                                    onClick={() =>
+                                      handleDuplicateQuantityChange(
+                                        product.id,
+                                        dup.addOn.id,
+                                        -1,
+                                        product
+                                      )
+                                    }
+                                  >
+                                    -
+                                  </button>
+                                  <span>{dup.quantity}</span>
+                                  <button
+                                    onClick={() =>
+                                      handleDuplicateQuantityChange(
+                                        product.id,
+                                        dup.addOn.id,
+                                        1,
+                                        product
+                                      )
+                                    }
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                               <div>
                                 <span>
                                   Add‑On: {dup.addOn.name} (+ ${dup.addOn.price}
                                   )
                                 </span>
-                              </div>
-                              <div className="quantity-controls">
-                                <button
-                                  onClick={() =>
-                                    handleDuplicateQuantityChange(
-                                      product.id,
-                                      dup.addOn.id,
-                                      -1,
-                                      product
-                                    )
-                                  }
-                                >
-                                  -
-                                </button>
-                                <span>{dup.quantity}</span>
-                                <button
-                                  onClick={() =>
-                                    handleDuplicateQuantityChange(
-                                      product.id,
-                                      dup.addOn.id,
-                                      1,
-                                      product
-                                    )
-                                  }
-                                >
-                                  +
-                                </button>
                               </div>
                             </div>
                           </div>
