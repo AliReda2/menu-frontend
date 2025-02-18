@@ -12,7 +12,7 @@ const Body = ({
   setSelectedAddOns,
   handleDuplicateAdd,
   handleDuplicateQuantityChangeGlobal,
-  shopId,
+  shop,
 }) => {
   const [addOns, setAddOns] = useState([]);
   const [duplicateProducts, setDuplicateProducts] = useState({});
@@ -21,18 +21,11 @@ const Body = ({
   // console.log("Body shopId:", shopId);
 
   useEffect(() => {
-    if (!shopId) {
+    if (!shop) {
       console.log("shopId is not set yet. Skipping API call.");
       return;
     }
-    const fetchShop = async () => {
-      try {
-        const response = await api.get(`/shops/${shopId}`); // Use dynamic shopId
-        setCategory(response.data.categories);
-      } catch (error) {
-        console.error("Error fetching shop:", error);
-      }
-    };
+    setCategory(shop.categories);
 
     const fetchAddOns = async () => {
       try {
@@ -45,7 +38,7 @@ const Body = ({
 
     fetchShop();
     fetchAddOns();
-  }, [shopId, setCategory]); // Ensure useEffect runs whenever shopId changes
+  }, [shop, setCategory]); // Ensure useEffect runs whenever shopId changes
 
   const handleAddOnChange = (product, addOnId) => {
     if (!addOnId) return; // "None" selected

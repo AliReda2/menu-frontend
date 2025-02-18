@@ -152,7 +152,7 @@ const Home = () => {
       {/* Pass shopId as a prop to children components */}
       <Slider shop={shop} />
       <Body
-        shopId={shopId}
+        shop={shop}
         handleQuantityChange={handleQuantityChange}
         quantities={quantities}
         setCategory={setCategory}
