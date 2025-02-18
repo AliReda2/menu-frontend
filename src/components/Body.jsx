@@ -94,7 +94,7 @@ const Body = ({
     <div className="body">
       <Categories shopId={shopId} onCategoryClick={handleCategoryClick} />
       <h2 className="section-title">Our Specialties</h2>
-      {(category || [])
+      {category
         .filter((cat) => !activeCategory || cat.id === activeCategory)
         .map((cat) => (
           <div key={cat.id} ref={(el) => (sectionRefs.current[cat.id] = el)}>
