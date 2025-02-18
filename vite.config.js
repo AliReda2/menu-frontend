@@ -1,8 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import Inspect from 'vite-plugin-inspect';
+
 
 export default defineConfig({
-  plugins: [react()], // Removed Tailwind CSS plugin
+  plugins: [react(),Inspect()], // Removed Tailwind CSS plugin
   server: {
     port: 3000,
     proxy: {
