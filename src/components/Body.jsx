@@ -89,7 +89,7 @@ const Body = ({
 
   return (
     <div className="body">
-      <Categories shopId={shopId} onCategoryClick={handleCategoryClick} />
+      <Categories category={category} onCategoryClick={handleCategoryClick} />
       <h2 className="section-title">Our Specialties</h2>
       {category
         .filter((cat) => !activeCategory || cat.id === activeCategory)
