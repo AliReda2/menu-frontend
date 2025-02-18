@@ -13,19 +13,20 @@ const Body = ({
   handleDuplicateAdd,
   handleDuplicateQuantityChangeGlobal,
   shop,
+  shopId,
 }) => {
   const [addOns, setAddOns] = useState([]);
   const [duplicateProducts, setDuplicateProducts] = useState({});
   const sectionRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState(null);
+  setCategory(shop.categories);
   // console.log("Body shopId:", shopId);
 
   useEffect(() => {
-    if (!shop) {
+    if (!shopId) {
       console.log("shopId is not set yet. Skipping API call.");
       return;
     }
-    setCategory(shop.categories);
 
     const fetchAddOns = async () => {
       try {
@@ -38,7 +39,7 @@ const Body = ({
 
     fetchShop();
     fetchAddOns();
-  }, [shop, setCategory]); // Ensure useEffect runs whenever shopId changes
+  }, [shopId, setCategory]); // Ensure useEffect runs whenever shopId changes
 
   const handleAddOnChange = (product, addOnId) => {
     if (!addOnId) return; // "None" selected

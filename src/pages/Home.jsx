@@ -153,6 +153,7 @@ const Home = () => {
       <Slider shop={shop} />
       <Body
         shop={shop}
+        shopId={shopId}
         handleQuantityChange={handleQuantityChange}
         quantities={quantities}
         setCategory={setCategory}
