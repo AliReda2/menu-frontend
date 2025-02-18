@@ -1,6 +1,7 @@
 import "../style/Slider.css";
 
 const Slider = ({ shop }) => {
+  console.log("slider:" + shop);
   return (
     <div
       className="slider"
