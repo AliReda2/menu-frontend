@@ -19,6 +19,8 @@
     gap: 20px;
     margin: 0;
     padding: 0;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .nav-links a {
