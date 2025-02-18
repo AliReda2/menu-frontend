@@ -36,7 +36,6 @@ const Home = () => {
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data);
         setCategory(response.data.categories)
-        console.log(shop);
       } catch (error) {
         console.error("Error fetching shop:", error);
       }
@@ -46,9 +45,7 @@ const Home = () => {
       fetchShop();
     }
   }, [shopId]);
-  useEffect(() => {
-    console.log("Updated shop state:", shop);
-  }, [shop]);
+
 
   // Handles quantity changes for original products.
   const handleQuantityChange = (productId, delta, product) => {
