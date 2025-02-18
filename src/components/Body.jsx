@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../services/api";
 import "../style/Body.css";
 import Categories from "./Categories";
