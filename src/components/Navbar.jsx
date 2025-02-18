@@ -29,16 +29,23 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo">{shop ? shop.name : "Loading..."}</div>
+      <div className="logo">
+        <NavLink
+          to={`/${shopId}`} // This ensures the current shopId is included in the URL
+          className={({ isActive }) => (isActive ? "active-link" : "")}
+        >
+          {shop ? shop.name : "Loading..."}
+        </NavLink>
+      </div>
       <ul className="nav-links">
-        <li>
+        {/* <li>
           <NavLink
             to={`/${shopId}`} // This ensures the current shopId is included in the URL
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             to={`/about`} // Include shopId in the About Us link
