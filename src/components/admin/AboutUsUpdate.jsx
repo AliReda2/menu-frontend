@@ -29,6 +29,7 @@ const LocationSelector = ({ location, setLocation }) => {
       setLocation({ latitude: e.latlng.lat, longitude: e.latlng.lng });
     },
   });
+
   // Explicit check to ensure valid coordinates (0 is valid)
   return location.latitude != null && location.longitude != null ? (
     <Marker
@@ -51,7 +52,6 @@ const RecenterMap = ({ coords }) => {
 const AboutUsUpdate = ({ shopId }) => {
   const [aboutUs, setAboutUs] = useState({});
   const [editingAboutUsId, setEditingAboutUsId] = useState(null);
-  const [showMap, setShowMap] = useState(false);
   // Location state for latitude/longitude; initialize as null
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
@@ -94,14 +94,19 @@ const AboutUsUpdate = ({ shopId }) => {
 
       await api.patch(`/aboutUs/${editingAboutUsId}`, updateData);
       alert("About Us updated successfully");
-      // Optionally, refetch the data to update the UI and close the map
+      // Optionally, refetch the data to update the UI
       fetchAboutUs();
-      setShowMap(false);
     } catch (err) {
       console.error("Error updating AboutUs:", err);
       alert("Error updating About Us");
     }
   };
+
+  // Use fetched location for centering; if null, fallback to [0,0]
+  const mapCenter =
+    location.latitude != null && location.longitude != null
+      ? [location.latitude, location.longitude]
+      : [0, 0];
 
   return (
     <div>
@@ -134,30 +139,21 @@ const AboutUsUpdate = ({ shopId }) => {
           />
         </label>
       </div>
-      <div>
-        <button onClick={() => setShowMap(!showMap)}>
-          {showMap ? "Close Map" : "Select Location on Map"}
-        </button>
+      <br />
+      <div style={{ height: "400px", width: "100%", marginTop: "10px" }}>
+        <MapContainer
+          center={mapCenter}
+          zoom={13}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <RecenterMap coords={mapCenter} />
+          <LocationSelector location={location} setLocation={setLocation} />
+        </MapContainer>
       </div>
-      {showMap &&
-        (location.latitude != null && location.longitude != null ? (
-          <div style={{ height: "400px", width: "100%", marginTop: "10px" }}>
-            <MapContainer
-              center={[location.latitude, location.longitude]}
-              zoom={13}
-              style={{ height: "100%", width: "100%" }}
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
-              <RecenterMap coords={[location.latitude, location.longitude]} />
-              <LocationSelector location={location} setLocation={setLocation} />
-            </MapContainer>
-          </div>
-        ) : (
-          <p>Loading map...</p>
-        ))}
       <br />
       <button onClick={handleAboutUsUpdate}>Update</button>
     </div>
