@@ -3,7 +3,10 @@ import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
 
 export default defineConfig({
-  plugins: [react(), viteCompression()], // Removed Tailwind CSS plugin
+  plugins: [react(), viteCompression()], 
+  define: {
+    "process.env.NODE_ENV": '"production"',
+  },
   server: {
     proxy: {
       "/api": {
@@ -14,7 +17,6 @@ export default defineConfig({
       },
     },
   },
-
   build: {
     minify: "terser",
     terserOptions: {

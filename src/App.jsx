@@ -1,20 +1,25 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
-import AboutUs from "./pages/About";
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
+
+// Lazy load pages
+const Home = lazy(() => import("./pages/Home"));
+const AboutUs = lazy(() => import("./pages/About"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 const App = () => {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/:shopId" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/:shopId" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 };
