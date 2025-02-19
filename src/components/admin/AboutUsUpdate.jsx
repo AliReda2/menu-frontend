@@ -150,8 +150,8 @@ const AboutUsUpdate = ({ shopId }) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <RecenterMap coords={mapCenter} />
-          <LocationSelector location={location} setLocation={setLocation} />
+          {/* <RecenterMap coords={mapCenter} /> */}
+          {/* <LocationSelector location={location} setLocation={setLocation} /> */}
         </MapContainer>
       </div>
       <br />
