@@ -4,8 +4,14 @@ import "../style/Slider.css";
 const Slider = ({ shop }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
+  const [lowResSrc, setLowResSrc] = useState("");
 
   useEffect(() => {
+    if (!shop.image) return;
+
+    // Set low-resolution placeholder image first
+    setLowResSrc(`https://menu-backend-rnpu.onrender.com/${shop.image}?w=50&blur=10`);
+
     const img = new Image();
     img.src = `https://menu-backend-rnpu.onrender.com/${shop.image}`;
     img.onload = () => {
@@ -15,11 +21,15 @@ const Slider = ({ shop }) => {
   }, [shop.image]);
 
   return (
-    <div
-      className="slider"
-      style={{ backgroundImage: imageLoaded ? `url(${imageSrc})` : "none" }}
-    >
-      {!imageLoaded && <div className="placeholder">Loading...</div>}
+    <div className="slider">
+      <div
+        className="background"
+        style={{
+          backgroundImage: `url(${imageLoaded ? imageSrc : lowResSrc})`,
+          filter: imageLoaded ? "none" : "blur(10px)", // Blur effect until the image is fully loaded
+          transition: "filter 0.5s ease-out",
+        }}
+      />
       <div className="slide">
         <h1>Welcome to {shop.name}</h1>
         <p>{shop.description}</p>
