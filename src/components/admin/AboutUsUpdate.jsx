@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvents,
+  useMap,
+} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Optional: Custom marker icon (using the default icon URL from Leaflet CDN)
+// Custom marker icon
 const customIcon = new L.Icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -23,7 +29,8 @@ const LocationSelector = ({ location, setLocation }) => {
       setLocation({ latitude: e.latlng.lat, longitude: e.latlng.lng });
     },
   });
-  return location.latitude && location.longitude ? (
+  // Explicit check to ensure valid coordinates (0 is valid)
+  return location.latitude != null && location.longitude != null ? (
     <Marker
       position={[location.latitude, location.longitude]}
       icon={customIcon}
@@ -31,19 +38,27 @@ const LocationSelector = ({ location, setLocation }) => {
   ) : null;
 };
 
+// Component to recenter the map and force it to recalc its size
+const RecenterMap = ({ coords }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.invalidateSize();
+    map.setView(coords);
+  }, [coords, map]);
+  return null;
+};
+
 const AboutUsUpdate = ({ shopId }) => {
-  // aboutUs now stores the whole object from the API
   const [aboutUs, setAboutUs] = useState({});
   const [editingAboutUsId, setEditingAboutUsId] = useState(null);
   const [showMap, setShowMap] = useState(false);
-  // Location state for latitude/longitude; initialize as null (or use existing data after fetch)
+  // Location state for latitude/longitude; initialize as null
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
   // Fetch the About Us data for the given shopId
   const fetchAboutUs = async () => {
     try {
       const response = await api.get(`/aboutUs?shop_id=${shopId}`);
-      // Assuming response.data is an object, not an array
       const aboutUsData = response.data;
       setAboutUs(aboutUsData || {});
       setEditingAboutUsId(aboutUsData.id);
@@ -52,7 +67,6 @@ const AboutUsUpdate = ({ shopId }) => {
         latitude: aboutUsData.latitude || null,
         longitude: aboutUsData.longitude || null,
       });
-      // console.log("AboutUs fetched:", aboutUsData);
     } catch (err) {
       console.error("Error fetching AboutUs:", err);
       alert("Error fetching About Us data");
@@ -69,7 +83,6 @@ const AboutUsUpdate = ({ shopId }) => {
       alert("Please enter a description to update.");
       return;
     }
-
     try {
       // Construct update data: send address, description, and the selected location
       const updateData = {
@@ -138,13 +151,13 @@ const AboutUsUpdate = ({ shopId }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
+              <RecenterMap coords={[location.latitude, location.longitude]} />
               <LocationSelector location={location} setLocation={setLocation} />
             </MapContainer>
           </div>
         ) : (
           <p>Loading map...</p>
         ))}
-
       <br />
       <button onClick={handleAboutUsUpdate}>Update</button>
     </div>
