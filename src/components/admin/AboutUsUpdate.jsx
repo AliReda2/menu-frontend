@@ -23,31 +23,31 @@ const customIcon = new L.Icon({
 });
 
 // Component that listens for map clicks and updates location
-const LocationSelector = ({ location, setLocation }) => {
-  useMapEvents({
-    click(e) {
-      setLocation({ latitude: e.latlng.lat, longitude: e.latlng.lng });
-    },
-  });
+// const LocationSelector = ({ location, setLocation }) => {
+//   useMapEvents({
+//     click(e) {
+//       setLocation({ latitude: e.latlng.lat, longitude: e.latlng.lng });
+//     },
+//   });
 
-  // Explicit check to ensure valid coordinates (0 is valid)
-  return location.latitude != null && location.longitude != null ? (
-    <Marker
-      position={[location.latitude, location.longitude]}
-      icon={customIcon}
-    />
-  ) : null;
-};
+//   // Explicit check to ensure valid coordinates (0 is valid)
+//   return location.latitude != null && location.longitude != null ? (
+//     <Marker
+//       position={[location.latitude, location.longitude]}
+//       icon={customIcon}
+//     />
+//   ) : null;
+// };
 
 // Component to recenter the map and force it to recalc its size
-const RecenterMap = ({ coords }) => {
-  const map = useMap();
-  useEffect(() => {
-    map.invalidateSize();
-    map.setView(coords);
-  }, [coords, map]);
-  return null;
-};
+// const RecenterMap = ({ coords }) => {
+//   const map = useMap();
+//   useEffect(() => {
+//     map.invalidateSize();
+//     map.setView(coords);
+//   }, [coords, map]);
+//   return null;
+// };
 
 const AboutUsUpdate = ({ shopId }) => {
   const [aboutUs, setAboutUs] = useState({});

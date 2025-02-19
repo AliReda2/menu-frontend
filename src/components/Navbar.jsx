@@ -56,7 +56,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="/admin-login" // This doesn't need shopId in the URL
+            to="/admin" // This doesn't need shopId in the URL
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Admin Panel
