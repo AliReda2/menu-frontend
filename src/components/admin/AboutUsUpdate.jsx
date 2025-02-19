@@ -126,25 +126,25 @@ const AboutUsUpdate = ({ shopId }) => {
           {showMap ? "Close Map" : "Select Location on Map"}
         </button>
       </div>
-      {showMap && (
-        <div style={{ height: "400px", width: "100%", marginTop: "10px" }}>
-          <MapContainer
-            center={
-              location.latitude && location.longitude
-                ? [location.latitude, location.longitude]
-                : [0, 0]
-            }
-            zoom={13}
-            style={{ height: "100%", width: "100%" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <LocationSelector location={location} setLocation={setLocation} />
-          </MapContainer>
-        </div>
-      )}
+      {showMap &&
+        (location.latitude != null && location.longitude != null ? (
+          <div style={{ height: "400px", width: "100%", marginTop: "10px" }}>
+            <MapContainer
+              center={[location.latitude, location.longitude]}
+              zoom={13}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              <LocationSelector location={location} setLocation={setLocation} />
+            </MapContainer>
+          </div>
+        ) : (
+          <p>Loading map...</p>
+        ))}
+
       <br />
       <button onClick={handleAboutUsUpdate}>Update</button>
     </div>
