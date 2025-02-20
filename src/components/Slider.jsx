@@ -9,7 +9,9 @@ const Slider = ({ shop }) => {
   useEffect(() => {
     if (!shop.image) return;
 
-    // Set low-resolution placeholder image first
+    console.log("Low-res image URL:", `${shop.image}?w=50&blur=10`);
+    console.log("Full image URL:", shop.image);
+
     setLowResSrc(`${shop.image}?w=50&blur=10`);
 
     const img = new Image();
