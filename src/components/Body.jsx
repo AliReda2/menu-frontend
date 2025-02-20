@@ -109,7 +109,7 @@ const Body = ({
                     <div className="slider-item">
                       <div className="product-image">
                         <img
-                          src={`https://menu-backend-rnpu.onrender.com/${product.image}`}
+                          src={product.image}
                           alt={product.name}
                           width="50"
                         />
@@ -177,7 +177,7 @@ const Body = ({
                           >
                             <div className="product-image">
                               <img
-                                src={`https://menu-backend-rnpu.onrender.com/${product.image}`}
+                                src={product.image}
                                 alt={product.name}
                                 width="50"
                               />

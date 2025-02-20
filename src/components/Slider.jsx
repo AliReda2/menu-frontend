@@ -10,10 +10,10 @@ const Slider = ({ shop }) => {
     if (!shop.image) return;
 
     // Set low-resolution placeholder image first
-    setLowResSrc(`https://menu-backend-rnpu.onrender.com/${shop.image}?w=50&blur=10`);
+    setLowResSrc(`${shop.image}?w=50&blur=10`);
 
     const img = new Image();
-    img.src = `https://menu-backend-rnpu.onrender.com/${shop.image}`;
+    img.src = `${shop.image}`;
     img.onload = () => {
       setImageSrc(img.src);
       setImageLoaded(true);

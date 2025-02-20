@@ -13,7 +13,7 @@ const Categories = ({ onCategoryClick, category }) => {
           onClick={() => onCategoryClick(category.id)}
         >
           <img
-            src={`https://menu-backend-rnpu.onrender.com/${category.image}`}
+            src={category.image}
             alt={category.name}
             width="50"
           />

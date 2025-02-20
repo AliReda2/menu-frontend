@@ -189,7 +189,7 @@ const ProductManager = ({ shopId }) => {
               <td>
                 {prod.image ? (
                   <img
-                    src={`https://menu-backend-rnpu.onrender.com/${prod.image}`}
+                    src={prod.image}
                     alt={prod.name}
                     width="50"
                   />

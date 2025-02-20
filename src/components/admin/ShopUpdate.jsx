@@ -114,8 +114,8 @@ const ShopUpdate = ({ shopId }) => {
             shopImage instanceof File
               ? URL.createObjectURL(shopImage)
               : shopImage
-              ? `https://menu-backend-rnpu.onrender.com/${shopImage}`
-              : `https://menu-backend-rnpu.onrender.com/${originalImage}`
+              ? shopImage
+              : originalImage
           }
           alt="Shop Image"
           width="100"
