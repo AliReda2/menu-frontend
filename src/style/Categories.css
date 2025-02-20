@@ -21,6 +21,7 @@
   flex: 0 0 150px;
   height: 150px;
   border-radius: 10px;
+  background-color: aliceblue;
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
