@@ -24,9 +24,13 @@ const Slider = ({ shop }) => {
 
   return (
     <div className="slider">
-      <div className="background" />
-      <img src={imageLoaded ? imageSrc : lowResSrc} alt="Shop" />
-
+      <div className="background">
+        <img
+          src={imageLoaded ? imageSrc : lowResSrc}
+          alt="Shop"
+          className="background-image"
+        />
+      </div>
       <div className="slide">
         <h1>Welcome to {shop.name}</h1>
         <p>{shop.description}</p>
