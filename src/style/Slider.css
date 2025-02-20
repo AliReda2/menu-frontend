@@ -8,6 +8,14 @@
     color: white;
 }
 
+.slider .background {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+}
+
+
 .slide h1 {
     font-size: 2.5em;
     margin: 0;

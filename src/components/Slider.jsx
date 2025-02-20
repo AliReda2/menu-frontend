@@ -24,14 +24,9 @@ const Slider = ({ shop }) => {
 
   return (
     <div className="slider">
-      <div
-        className="background"
-        style={{
-          backgroundImage: `url(${imageLoaded ? imageSrc : lowResSrc})`,
-          filter: imageLoaded ? "none" : "blur(10px)", // Blur effect until the image is fully loaded
-          transition: "filter 0.5s ease-out",
-        }}
-      />
+      <div className="background" />
+      <img src={imageLoaded ? imageSrc : lowResSrc} alt="Shop" />
+
       <div className="slide">
         <h1>Welcome to {shop.name}</h1>
         <p>{shop.description}</p>
