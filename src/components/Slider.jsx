@@ -15,7 +15,7 @@ const Slider = ({ shop }) => {
     setLowResSrc(`${shop.image}?w=50&blur=10`);
 
     const img = new Image();
-    img.src = `${shop.image}`;
+    img.src = shop.image;
     img.onload = () => {
       setImageSrc(img.src);
       setImageLoaded(true);
