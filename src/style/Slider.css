@@ -11,6 +11,7 @@
 
 .slider .background {
     width: 100%;
+    height: -webkit-fill-available;
     position: relative;
 }
 
