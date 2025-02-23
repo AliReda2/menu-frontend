@@ -2,24 +2,24 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 
-const ProductManager = ({ shopId }) => {
+const ProductManager = ({ shopId, categories }) => {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productImage, setProductImage] = useState(null);
   const [editingProductId, setEditingProductId] = useState(null);
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const fetchCategories = async () => {
-    try {
-      const response = await api.get(`/categories?shop_id=${shopId}`);
-      setCategories(response.data);
-    } catch (err) {
-      console.error("Error fetching categories:", err);
-    }
-  };
+  // const fetchCategories = async () => {
+  //   try {
+  //     const response = await api.get(`/categories?shop_id=${shopId}`);
+  //     setCategories(response.data);
+  //   } catch (err) {
+  //     console.error("Error fetching categories:", err);
+  //   }
+  // };
 
   const fetchProducts = async () => {
     try {
@@ -32,7 +32,7 @@ const ProductManager = ({ shopId }) => {
 
   useEffect(() => {
     if (shopId) {
-      fetchCategories();
+      // fetchCategories();
       fetchProducts();
     }
   }, [shopId]);

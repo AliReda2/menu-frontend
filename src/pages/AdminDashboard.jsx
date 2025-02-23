@@ -15,6 +15,8 @@ const AdminDashboard = () => {
   const [error, setError] = useState("");
   const [shopData, setShopData] = useState({ name: "", description: "" });
   const [shop, setShop] = useState({});
+  const [categories, setCategories] = useState({});
+  const [menu, setMenu] = useState({});
 
   useEffect(() => {
     // Early return if not authenticated
@@ -30,7 +32,7 @@ const AdminDashboard = () => {
         // console.log("Fetching shop data for shopId:", shopId);
         const response = await api.get(`/shops/${shopId}`);
         setShop(response.data);
-        // const shop = response.data;
+        setCategories(response.data.categories);
         setShopData({
           name: shop.name || "",
           description: shop.description || "",
@@ -53,7 +55,7 @@ const AdminDashboard = () => {
       <p>{shopData.description}</p>
       <ShopUpdate shopId={shopId} shop={shop} />
       <CategoryManager shopId={shopId} />
-      <ProductManager shopId={shopId} />
+      <ProductManager shopId={shopId} categories={categories} />
       <AddOnManager shopId={shopId} />
       <AboutUsUpdate shopId={shopId} />
     </div>
