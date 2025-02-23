@@ -13,10 +13,15 @@ const ShopUpdate = ({ shopId, shop }) => {
 
   // Fetch shop data
   // const fetchShopData = async () => {
-  try {
+  // try {
+  useEffect(() => {
+    if (!shop) {
+      console.error("Error fetching shop:", err);
+      setError("Failed to load shop data.");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
-    // const response = await api.get(`/shops/${shopId}`);
-    // const shop = response.data;
     setShopName(shop.name || "");
     setShopDescription(shop.description || "");
     setOriginalName(shop.name || "");
@@ -24,11 +29,11 @@ const ShopUpdate = ({ shopId, shop }) => {
     setShopImage(null);
     setOriginalImage(shop.image || null);
     setLoading(false);
-  } catch (err) {
-    console.error("Error fetching shop:", err);
-    setError("Failed to load shop data.");
-    setLoading(false);
-  }
+  },[shop]);
+  // const response = await api.get(`/shops/${shopId}`);
+  // const shop = response.data;
+  // } catch (err) {
+  // }
   // };
 
   // useEffect(() => {
