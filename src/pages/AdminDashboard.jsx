@@ -14,6 +14,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [shopData, setShopData] = useState({ name: "", description: "" });
+  const [shop, setShop] = useState({});
 
   useEffect(() => {
     // Early return if not authenticated
@@ -28,7 +29,8 @@ const AdminDashboard = () => {
       try {
         // console.log("Fetching shop data for shopId:", shopId);
         const response = await api.get(`/shops/${shopId}`);
-        const shop = response.data;
+        setShop(response.data);
+        // const shop = response.data;
         setShopData({
           name: shop.name || "",
           description: shop.description || "",
