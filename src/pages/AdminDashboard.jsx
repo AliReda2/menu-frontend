@@ -15,8 +15,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState("");
   const [shopData, setShopData] = useState({ name: "", description: "" });
   const [shop, setShop] = useState({});
-  const [categories, setCategories] = useState({});
-  const [menu, setMenu] = useState({});
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     // Early return if not authenticated
