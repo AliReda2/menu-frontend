@@ -51,11 +51,11 @@ const AdminDashboard = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <h2>{shopData.name}</h2>
       <p>{shopData.description}</p>
-      <ShopUpdate shopId={shopId} />
-      <CategoryManager shopId={shopId} />
-      <ProductManager shopId={shopId} />
-      <AddOnManager shopId={shopId} />
-      <AboutUsUpdate shopId={shopId} />
+      <ShopUpdate shopId={shopId} shop={shop} />
+      <CategoryManager shopId={shopId} shop={shop} />
+      <ProductManager shopId={shopId} shop={shop} />
+      <AddOnManager shopId={shopId} shop={shop} />
+      <AboutUsUpdate shopId={shopId} shop={shop} />
     </div>
   );
 };
