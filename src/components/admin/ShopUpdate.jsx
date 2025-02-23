@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 
-const ShopUpdate = ({ shopId }) => {
+const ShopUpdate = ({ shopId, shop }) => {
   const [shopName, setShopName] = useState("");
   const [shopDescription, setShopDescription] = useState("");
   const [shopImage, setShopImage] = useState(null);
@@ -12,30 +12,30 @@ const ShopUpdate = ({ shopId }) => {
   const [loading, setLoading] = useState(false);
 
   // Fetch shop data
-  const fetchShopData = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get(`/shops/${shopId}`);
-      const shop = response.data;
-      setShopName(shop.name || "");
-      setShopDescription(shop.description || "");
-      setOriginalName(shop.name || "");
-      setOriginalDescription(shop.description || "");
-      setShopImage(null);
-      setOriginalImage(shop.image || null);
-      setLoading(false);
-    } catch (err) {
-      console.error("Error fetching shop:", err);
-      setError("Failed to load shop data.");
-      setLoading(false);
-    }
-  };
+  // const fetchShopData = async () => {
+  try {
+    setLoading(true);
+    // const response = await api.get(`/shops/${shopId}`);
+    // const shop = response.data;
+    setShopName(shop.name || "");
+    setShopDescription(shop.description || "");
+    setOriginalName(shop.name || "");
+    setOriginalDescription(shop.description || "");
+    setShopImage(null);
+    setOriginalImage(shop.image || null);
+    setLoading(false);
+  } catch (err) {
+    console.error("Error fetching shop:", err);
+    setError("Failed to load shop data.");
+    setLoading(false);
+  }
+  // };
 
-  useEffect(() => {
-    if (shopId) {
-      fetchShopData();
-    }
-  }, [shopId]);
+  // useEffect(() => {
+  //   if (shopId) {
+  //     fetchShopData();
+  //   }
+  // }, [shopId]);
 
   // Handle shop update
   const handleUpdateShop = async () => {
