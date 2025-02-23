@@ -52,10 +52,10 @@ const AdminDashboard = () => {
       <h2>{shopData.name}</h2>
       <p>{shopData.description}</p>
       <ShopUpdate shopId={shopId} shop={shop} />
-      <CategoryManager shopId={shopId} shop={shop} />
-      <ProductManager shopId={shopId} shop={shop} />
-      <AddOnManager shopId={shopId} shop={shop} />
-      <AboutUsUpdate shopId={shopId} shop={shop} />
+      <CategoryManager shopId={shopId} />
+      <ProductManager shopId={shopId} />
+      <AddOnManager shopId={shopId} />
+      <AboutUsUpdate shopId={shopId} />
     </div>
   );
 };
