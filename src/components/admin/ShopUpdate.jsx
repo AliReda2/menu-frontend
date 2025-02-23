@@ -11,43 +11,25 @@ const ShopUpdate = ({ shopId, shop }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch shop data
-  // const fetchShopData = async () => {
-  // try {
   useEffect(() => {
     if (!shop) {
-      console.error("Error fetching shop:", err);
       setError("Failed to load shop data.");
-      setLoading(false);
       return;
     }
+
     setLoading(true);
     setShopName(shop.name || "");
     setShopDescription(shop.description || "");
     setOriginalName(shop.name || "");
     setOriginalDescription(shop.description || "");
-    setShopImage(null);
     setOriginalImage(shop.image || null);
     setLoading(false);
-  },[shop]);
-  // const response = await api.get(`/shops/${shopId}`);
-  // const shop = response.data;
-  // } catch (err) {
-  // }
-  // };
+  }, [shop]);
 
-  // useEffect(() => {
-  //   if (shopId) {
-  //     fetchShopData();
-  //   }
-  // }, [shopId]);
-
-  // Handle shop update
   const handleUpdateShop = async () => {
     const formData = new FormData();
     let hasUpdates = false;
 
-    // Only append fields if they have changed
     if (shopName.trim() && shopName !== originalName) {
       formData.append("name", shopName.trim());
       hasUpdates = true;
@@ -73,7 +55,6 @@ const ShopUpdate = ({ shopId, shop }) => {
 
       alert("Shop updated successfully");
       setError("");
-      fetchShopData(); // Refresh shop data
     } catch (err) {
       console.error("Error updating shop:", err);
       setError(err.response?.data?.error || "Error updating shop.");
