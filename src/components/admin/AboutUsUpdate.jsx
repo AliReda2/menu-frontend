@@ -118,8 +118,20 @@ const AboutUsUpdate = ({ shopId }) => {
       : [0, 0];
 
   return (
-    <Container maxWidth="sm">
-      <Card sx={{ mt: 3, p: 3 }}>
+    <Container
+      sx={{
+        paddingLeft: 0,
+        paddingRight: 0,
+        "& .MuiContainer-root": {
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+        "@media (min-width:600px)": {
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+      }}
+    >      <Card sx={{ mt: 3, p: 3 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom>
             Update About Us

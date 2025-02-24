@@ -95,7 +95,21 @@ const AddOnManager = ({ shopId }) => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container
+      sx={{
+        paddingLeft: 0,
+        paddingRight: 0,
+        "& .MuiContainer-root": {
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+        "@media (min-width:600px)": {
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+      }}
+    >
+      {" "}
       <Card sx={{ mt: 3, p: 3 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom>
@@ -148,11 +162,9 @@ const AddOnManager = ({ shopId }) => {
           </Stack>
         </CardContent>
       </Card>
-
       <Typography variant="h6" sx={{ mt: 4 }}>
         AddOns
       </Typography>
-
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table>
           <TableHead>
