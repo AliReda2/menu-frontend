@@ -78,17 +78,17 @@ const ShopUpdate = ({ shopId, shop }) => {
       </div>
 
       <div>
+        <label>Shop Image</label>
+        <input type="file" onChange={(e) => setShopImage(e.target.files[0])} />
+      </div>
+
+      <div>
         <label>Shop Description</label>
         <textarea
           value={shopDescription}
           onChange={(e) => setShopDescription(e.target.value)}
           placeholder="Shop Description"
         />
-      </div>
-
-      <div>
-        <label>Shop Image</label>
-        <input type="file" onChange={(e) => setShopImage(e.target.files[0])} />
       </div>
 
       <button onClick={handleUpdateShop}>Update Shop</button>
