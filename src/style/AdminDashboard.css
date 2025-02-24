@@ -42,8 +42,8 @@ tr:hover {
 .shopUpdate {
     display: grid;
     row-gap: 1rem;
-    grid-template-areas:
-        "header header"
+    column-gap: 1em;
+    grid-template-areas: "header header"
         "shopName shopImage"
         "shopDescription shopDescription"
         "displayedImage displayedImage"
