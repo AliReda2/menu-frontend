@@ -209,7 +209,7 @@ const CategoryManager = ({ shopId }) => {
                     <img
                       src={cat.image}
                       alt={cat.name}
-                      style={{ width: 50, height: 50, borderRadius: "8px" }}
+                      style={{ width: 70, borderRadius: "8px" }}
                     />
                   ) : (
                     "No image"
