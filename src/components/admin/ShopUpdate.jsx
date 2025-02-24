@@ -73,7 +73,7 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container minWidth="sm">
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
