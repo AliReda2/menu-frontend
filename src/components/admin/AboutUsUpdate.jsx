@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
-import api from "../../services/api";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  CircularProgress,
+  Alert,
+  Box,
+} from "@mui/material";
 import {
   MapContainer,
   TileLayer,
@@ -9,8 +20,9 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import api from "../../services/api";
 
-// Custom marker icon
+// Custom Leaflet marker
 const customIcon = new L.Icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -29,7 +41,6 @@ const LocationSelector = ({ location, setLocation }) => {
     },
   });
 
-  // Explicit check to ensure valid coordinates (0 is valid)
   return location.latitude != null && location.longitude != null ? (
     <Marker
       position={[location.latitude, location.longitude]}
@@ -50,24 +61,27 @@ const RecenterMap = ({ coords }) => {
 const AboutUsUpdate = ({ shopId }) => {
   const [aboutUs, setAboutUs] = useState({});
   const [editingAboutUsId, setEditingAboutUsId] = useState(null);
-  // Location state for latitude/longitude; initialize as null
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Fetch the About Us data for the given shopId
   const fetchAboutUs = async () => {
     try {
+      setLoading(true);
       const response = await api.get(`/aboutUs?shop_id=${shopId}`);
       const aboutUsData = response.data;
       setAboutUs(aboutUsData || {});
       setEditingAboutUsId(aboutUsData.id);
-      // Initialize the location state from fetched data
       setLocation({
         latitude: aboutUsData.latitude || null,
         longitude: aboutUsData.longitude || null,
       });
+      setError("");
     } catch (err) {
-      console.error("Error fetching AboutUs:", err);
-      alert("Error fetching About Us data");
+      console.error("Error fetching About Us:", err);
+      setError("Failed to load About Us data.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,14 +89,13 @@ const AboutUsUpdate = ({ shopId }) => {
     if (shopId) fetchAboutUs();
   }, [shopId]);
 
-  // Handle the update action
   const handleAboutUsUpdate = async () => {
-    if (!aboutUs.description) {
-      alert("Please enter a description to update.");
+    if (!aboutUs.description.trim()) {
+      setError("Description is required.");
       return;
     }
+
     try {
-      // Construct update data: send address, description, and the selected location
       const updateData = {
         address: aboutUs.address,
         description: aboutUs.description,
@@ -92,69 +105,85 @@ const AboutUsUpdate = ({ shopId }) => {
 
       await api.patch(`/aboutUs/${editingAboutUsId}`, updateData);
       alert("About Us updated successfully");
-      // Optionally, refetch the data to update the UI
       fetchAboutUs();
     } catch (err) {
-      console.error("Error updating AboutUs:", err);
-      alert("Error updating About Us");
+      console.error("Error updating About Us:", err);
+      setError("Error updating About Us.");
     }
   };
 
-  // Use fetched location for centering; if null, fallback to [0,0]
   const mapCenter =
     location.latitude != null && location.longitude != null
       ? [location.latitude, location.longitude]
       : [0, 0];
 
   return (
-    <div>
-      <h2>Update About Us</h2>
-      <div>
-        <label>
-          Address:
-          <input
-            type="text"
-            value={aboutUs.address || ""}
-            onChange={(e) =>
-              setAboutUs({ ...aboutUs, address: e.target.value })
-            }
-            placeholder="Enter address"
-          />
-        </label>
-      </div>
-      <br />
-      <div>
-        <label>
-          Description:
-          <textarea
-            value={aboutUs.description || ""}
-            onChange={(e) =>
-              setAboutUs({ ...aboutUs, description: e.target.value })
-            }
-            placeholder="Enter new About Us content..."
-            rows="6"
-            cols="60"
-          />
-        </label>
-      </div>
-      <br />
-      <div style={{ height: "400px", width: "100%", marginTop: "10px" }}>
-        <MapContainer
-          center={mapCenter}
-          zoom={13}
-          style={{ height: "100%", width: "100%" }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <RecenterMap coords={mapCenter} />
-          <LocationSelector location={location} setLocation={setLocation} />
-        </MapContainer>
-      </div>
-      <br />
-      <button onClick={handleAboutUsUpdate}>Update</button>
-    </div>
+    <Container maxWidth="sm">
+      <Card sx={{ mt: 3, p: 3 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            Update About Us
+          </Typography>
+
+          {error && <Alert severity="error">{error}</Alert>}
+          {loading && <CircularProgress sx={{ my: 2 }} />}
+
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              label="Address"
+              variant="outlined"
+              fullWidth
+              value={aboutUs.address || ""}
+              onChange={(e) =>
+                setAboutUs({ ...aboutUs, address: e.target.value })
+              }
+              placeholder="Enter address"
+            />
+
+            <TextField
+              label="Description"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              value={aboutUs.description || ""}
+              onChange={(e) =>
+                setAboutUs({ ...aboutUs, description: e.target.value })
+              }
+              placeholder="Enter new About Us content..."
+            />
+          </Stack>
+
+          <Typography variant="h6" sx={{ mt: 3 }}>
+            Select Location
+          </Typography>
+          <Box sx={{ height: 400, width: "100%", mt: 2 }}>
+            <MapContainer
+              center={mapCenter}
+              zoom={13}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              <RecenterMap coords={mapCenter} />
+              <LocationSelector location={location} setLocation={setLocation} />
+            </MapContainer>
+          </Box>
+
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 3 }}
+            onClick={handleAboutUsUpdate}
+          >
+            Update
+          </Button>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
 
