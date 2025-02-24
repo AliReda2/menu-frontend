@@ -78,12 +78,15 @@ const ShopUpdate = ({ shopId, shop }) => {
         paddingLeft: 0,
         paddingRight: 0,
         "& .MuiContainer-root": {
-          paddingLeft: "0 !important",
-          paddingRight: "0 !important",
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+        "@media (min-width:600px)": {
+          paddingLeft: 0,
+          paddingRight: 0,
         },
       }}
     >
-      {" "}
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
