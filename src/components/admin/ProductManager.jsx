@@ -238,7 +238,7 @@ const ProductManager = ({ shopId, categories }) => {
                     <img
                       src={prod.image}
                       alt={prod.name}
-                      style={{ width: 50, height: 50, borderRadius: "8px" }}
+                      style={{ width: 50, borderRadius: "8px" }}
                     />
                   ) : (
                     "No image"
