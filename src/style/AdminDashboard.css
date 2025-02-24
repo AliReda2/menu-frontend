@@ -63,7 +63,7 @@ tr:hover {
     grid-area: shopImage;
 }
 
-.shopUpdate>div.shopDescrption {
+.shopUpdate>div.shopDescription {
     grid-area: shopDescription;
 }
 
