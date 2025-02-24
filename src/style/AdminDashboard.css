@@ -1,13 +1,3 @@
-.admin-dashboard {
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
-}
-
-div {
-    overflow: auto;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;

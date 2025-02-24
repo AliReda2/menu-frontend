@@ -1,4 +1,15 @@
 import { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+  Stack,
+} from "@mui/material";
 import api from "../../services/api";
 
 const ShopUpdate = ({ shopId, shop }) => {
@@ -62,52 +73,72 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <div className="shopUpdate">
-      <h3 className="header">Update Shop</h3>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {loading && <p>Loading...</p>}
+    <Container maxWidth="sm">
+      <Card>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            Update Shop
+          </Typography>
 
-      <div className="shopName">
-        <label>Shop Name</label>
-        <input
-          type="text"
-          value={shopName}
-          onChange={(e) => setShopName(e.target.value)}
-          placeholder="Shop Name"
-        />
-      </div>
+          {error && <Alert severity="error">{error}</Alert>}
+          {loading && <CircularProgress />}
 
-      <div className="shopImage">
-        <label>Shop Image</label>
-        <input type="file" onChange={(e) => setShopImage(e.target.files[0])} />
-      </div>
+          <Stack spacing={2}>
+            <TextField
+              label="Shop Name"
+              variant="outlined"
+              fullWidth
+              value={shopName}
+              onChange={(e) => setShopName(e.target.value)}
+            />
 
-      <div className="shopDescription">
-        <label>Shop Description</label>
-        <textarea
-          value={shopDescription}
-          onChange={(e) => setShopDescription(e.target.value)}
-          placeholder="Shop Description"
-        />
-      </div>
+            <TextField
+              label="Shop Description"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={3}
+              value={shopDescription}
+              onChange={(e) => setShopDescription(e.target.value)}
+            />
 
-      <div className="displayedImage">
-        <button onClick={handleUpdateShop}>Update Shop</button>
+            <Button variant="contained" component="label">
+              Upload Shop Image
+              <input
+                type="file"
+                hidden
+                onChange={(e) => setShopImage(e.target.files[0])}
+              />
+            </Button>
 
-        <h3>Current Shop Image</h3>
-        {originalImage && (
-          <img
-            src={
-              shopImage instanceof File
-                ? URL.createObjectURL(shopImage)
-                : originalImage
-            }
-            alt="Shop"
-            
-          />
-        )}
-      </div>
-    </div>
+            {originalImage && (
+              <img
+                src={
+                  shopImage instanceof File
+                    ? URL.createObjectURL(shopImage)
+                    : originalImage
+                }
+                alt="Shop"
+                style={{
+                  width: "100%",
+                  maxHeight: "200px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+            )}
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleUpdateShop}
+            >
+              Update Shop
+            </Button>
+          </Stack>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
 
