@@ -1,5 +1,22 @@
-// src/components/CategoryManager.js
 import { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+  Stack,
+} from "@mui/material";
 import api from "../../services/api";
 
 const CategoryManager = ({ shopId }) => {
@@ -8,15 +25,19 @@ const CategoryManager = ({ shopId }) => {
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchCategories = async () => {
     try {
+      setLoading(true);
       const response = await api.get(`/categories?shop_id=${shopId}`);
       setCategories(response.data);
       setError("");
     } catch (err) {
       console.error("Error fetching categories:", err);
       setError("Failed to load categories.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,7 +58,6 @@ const CategoryManager = ({ shopId }) => {
       if (categoryImage) formData.append("image", categoryImage);
 
       await api.post("/categories", formData);
-
       alert("Category added successfully");
       setCategoryName("");
       setCategoryImage(null);
@@ -93,72 +113,120 @@ const CategoryManager = ({ shopId }) => {
   };
 
   return (
-    <div>
-      <h3>{editingCategoryId ? "Edit Category" : "Add Category"}</h3>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input
-        type="text"
-        placeholder="Category Name"
-        value={categoryName}
-        onChange={(e) => setCategoryName(e.target.value)}
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setCategoryImage(e.target.files[0])}
-      />
-      {editingCategoryId ? (
-        <div>
-          <button onClick={handleUpdateCategory}>Update Category</button>
-          <button
-            onClick={() => {
-              setEditingCategoryId(null);
-              setCategoryName("");
-              setCategoryImage(null);
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <button onClick={handleAddCategory}>Add Category</button>
-      )}
+    <Container maxWidth="md">
+      <Card sx={{ mt: 3, p: 3 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            {editingCategoryId ? "Edit Category" : "Add Category"}
+          </Typography>
 
-      <h3>Categories</h3>
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((cat) => (
-            <tr key={cat.id}>
-              <td>{cat.name}</td>
-              <td>
-                {cat.image ? (
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    width="50"
-                  />
-                ) : (
-                  "No image"
-                )}
-              </td>
-              <td>
-                <button onClick={() => handleEditCategory(cat)}>Edit</button>
-                <button onClick={() => handleDeleteCategory(cat.id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          {error && <Alert severity="error">{error}</Alert>}
+          {loading && <CircularProgress />}
+
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              label="Category Name"
+              variant="outlined"
+              fullWidth
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+
+            <Button variant="contained" component="label">
+              Upload Category Image
+              <input
+                type="file"
+                hidden
+                onChange={(e) => setCategoryImage(e.target.files[0])}
+              />
+            </Button>
+
+            {editingCategoryId ? (
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleUpdateCategory}
+                >
+                  Update Category
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    setEditingCategoryId(null);
+                    setCategoryName("");
+                    setCategoryImage(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Stack>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAddCategory}
+              >
+                Add Category
+              </Button>
+            )}
+          </Stack>
+        </CardContent>
+      </Card>
+
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        Categories
+      </Typography>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Image</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {categories.map((cat) => (
+              <TableRow key={cat.id}>
+                <TableCell>{cat.name}</TableCell>
+                <TableCell>
+                  {cat.image ? (
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      style={{ width: 50, height: 50, borderRadius: "8px" }}
+                    />
+                  ) : (
+                    "No image"
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Stack direction="row" spacing={1}>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => handleEditCategory(cat)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDeleteCategory(cat.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 
