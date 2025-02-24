@@ -38,6 +38,35 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #f5f5f5;
 }
-.shopUpdate div{
+
+.shopUpdate {
+    display: grid;
+    row-gap: 1rem;
+    grid-template-areas:
+        "header header"
+        "shopName shopImage"
+        "shopDescription shopDescription"
+        "displayedImage displayedImage"
+    ;
+    grid-template-columns: 1fr 1fr;
+}
+
+.shopUpdate > h3.header{
+    grid-area: header;
+}
+.shopUpdate > div.shopName{
+    grid-area: shopName;
+}
+.shopUpdate > div.shopImage{
+    grid-area: shopImage;
+}
+.shopUpdate > div.shopDescrption{
+    grid-area: shopDescrption;
+}
+.shopUpdate > div.displayedImage{
+    grid-area: displayedImage;
+}
+
+.shopUpdate div {
     display: flex;
 }

@@ -63,11 +63,11 @@ const ShopUpdate = ({ shopId, shop }) => {
 
   return (
     <div className="shopUpdate">
-      <h3>Update Shop</h3>
+      <h3 className="header">Update Shop</h3>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p>Loading...</p>}
 
-      <div>
+      <div className="shopName">
         <label>Shop Name</label>
         <input
           type="text"
@@ -77,12 +77,12 @@ const ShopUpdate = ({ shopId, shop }) => {
         />
       </div>
 
-      <div>
+      <div className="shopImage">
         <label>Shop Image</label>
         <input type="file" onChange={(e) => setShopImage(e.target.files[0])} />
       </div>
 
-      <div>
+      <div className="shopDescription">
         <label>Shop Description</label>
         <textarea
           value={shopDescription}
@@ -93,18 +93,20 @@ const ShopUpdate = ({ shopId, shop }) => {
 
       <button onClick={handleUpdateShop}>Update Shop</button>
 
-      <h3>Current Shop Image</h3>
-      {originalImage && (
-        <img
-          src={
-            shopImage instanceof File
-              ? URL.createObjectURL(shopImage)
-              : originalImage
-          }
-          alt="Shop"
-          width="100"
-        />
-      )}
+      <div className="desplayedImage">
+        <h3>Current Shop Image</h3>
+        {originalImage && (
+          <img
+            src={
+              shopImage instanceof File
+                ? URL.createObjectURL(shopImage)
+                : originalImage
+            }
+            alt="Shop"
+            width="100"
+          />
+        )}
+      </div>
     </div>
   );
 };
