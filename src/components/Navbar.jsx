@@ -1,53 +1,54 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import api from "../services/api";
+import { NavLink } from "react-router-dom"; // Import useParams
 import "../style/Navbar.css";
 import { useGlobalState } from "../context/GlobalState";
 
 const Navbar = () => {
   const { shopId } = useGlobalState();
+  // console.log("Navbar shopId:", shopId);
   const [shop, setShop] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
+  // Fetch shop details based on shopId
   useEffect(() => {
-    if (!shopId) {
-      setLoading(false);
+    if (shopId === null) {
+      console.log("shopId is not set yet. Skipping API call.");
       return;
     }
-
     const fetchShop = async () => {
       try {
         const response = await api.get(`/shops/${shopId}?fields=name`);
         setShop(response.data);
-      } catch (err) {
-        setError("Failed to fetch shop details.");
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching shop:", error);
       }
     };
 
     fetchShop();
-  }, [shopId]);
+  }, [shopId]); // Re-fetch when shopId changes
 
   return (
     <nav className="navbar">
       <div className="logo">
         <NavLink
-          to={`/${shopId}`}
+          to={`/${shopId}`} // This ensures the current shopId is included in the URL
           className={({ isActive }) => (isActive ? "active-link" : "")}
         >
-          {loading
-            ? "Fetching..."
-            : error
-            ? "Shop Not Found"
-            : shop?.name || "Unnamed Shop"}
+          {shop ? shop.name : "Loading..."}
         </NavLink>
       </div>
       <ul className="nav-links">
+        {/* <li>
+          <NavLink
+            to={`/${shopId}`} // This ensures the current shopId is included in the URL
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Home
+          </NavLink>
+        </li> */}
         <li>
           <NavLink
-            to={`/about/${shopId}`}
+            to={`/about`} // Include shopId in the About Us link
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             About Us
@@ -55,7 +56,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="/admin"
+            to="/admin" // This doesn't need shopId in the URL
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Admin Panel
