@@ -91,9 +91,9 @@ const ShopUpdate = ({ shopId, shop }) => {
         />
       </div>
 
-      <button onClick={handleUpdateShop}>Update Shop</button>
-
       <div className="desplayedImage">
+        <button onClick={handleUpdateShop}>Update Shop</button>
+
         <h3>Current Shop Image</h3>
         {originalImage && (
           <img
