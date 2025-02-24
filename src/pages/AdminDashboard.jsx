@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Typography } from "@mui/material";
 import CategoryManager from "../components/admin/CategoryManager";
 import ProductManager from "../components/admin/ProductManager";
 import AddOnManager from "../components/admin/AddOnManager";
@@ -47,17 +48,20 @@ const AdminDashboard = () => {
   }, [shopId, isAdminAuthenticated, navigate]); // Add isAdminAuthenticated as dependency
 
   return (
-    <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <h2>{shopData.name}</h2>
-      <p>{shopData.description}</p>
+    <Container maxWidth="md">
+      <Typography variant="h4" gutterBottom>
+        Admin Dashboard
+      </Typography>
+      {error && <Typography color="error">{error}</Typography>}
+      <Typography variant="h5">{shopData.name}</Typography>
+      <Typography>{shopData.description}</Typography>
+
       <ShopUpdate shopId={shopId} shop={shop} />
       <CategoryManager shopId={shopId} />
       <ProductManager shopId={shopId} categories={categories} />
       <AddOnManager shopId={shopId} />
       <AboutUsUpdate shopId={shopId} />
-    </div>
+    </Container>
   );
 };
 
