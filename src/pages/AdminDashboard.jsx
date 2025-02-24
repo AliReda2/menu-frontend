@@ -49,13 +49,14 @@ const AdminDashboard = () => {
 
   return (
     <Container maxWidth="md">
+      <br />
       <Typography variant="h4" gutterBottom>
         Admin Dashboard
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <Typography variant="h5">{shopData.name}</Typography>
       <Typography>{shopData.description}</Typography>
-
+      <br />
       <ShopUpdate shopId={shopId} shop={shop} />
       <CategoryManager shopId={shopId} />
       <ProductManager shopId={shopId} categories={categories} />
