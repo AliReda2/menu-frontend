@@ -73,7 +73,7 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <Container minWidth="sm" sx={{ p: 0 }}>
+    <Container minWidth="sm" sx={{ padding: 0 }}>
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
