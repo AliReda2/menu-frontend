@@ -103,7 +103,7 @@ const ShopUpdate = ({ shopId, shop }) => {
                 : originalImage
             }
             alt="Shop"
-            style="width: -webkit-fill-available;"
+            
           />
         )}
       </div>
