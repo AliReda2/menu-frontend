@@ -73,14 +73,7 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <Container
-      sx={{
-        ".MuiContainer-root": {
-          paddingLeft: 0,
-          paddingRight: 0,
-        },
-      }}
-    >
+    <Container>
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
