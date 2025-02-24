@@ -62,7 +62,7 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <div>
+    <div className="shopUpdate">
       <h3>Update Shop</h3>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p>Loading...</p>}
