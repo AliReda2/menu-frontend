@@ -73,7 +73,7 @@ const ShopUpdate = ({ shopId, shop }) => {
   };
 
   return (
-    <Container>
+    <Container sx={{ p: 0 }}>
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
