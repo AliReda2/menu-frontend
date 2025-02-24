@@ -27,15 +27,14 @@ const AdminLogin = () => {
     try {
       const response = await api.post("/users/login", {
         name: username,
-        password,
+        password: password,
       });
 
       if (response.data.success) {
-        const { shop_id, token } = response.data.user || {};
+        const { shop_id } = response.data.user || {};
 
-        if (shop_id && token) {
+        if (shop_id) {
           localStorage.setItem("isAdminAuthenticated", "true");
-          localStorage.setItem("adminToken", token); // Store token for future requests
           navigate("/admin");
         } else {
           setErrorMessage("Invalid response. Please contact support.");
