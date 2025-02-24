@@ -1,4 +1,22 @@
 import { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+  Stack,
+} from "@mui/material";
 import api from "../../services/api";
 
 const AddOnManager = ({ shopId }) => {
@@ -6,13 +24,20 @@ const AddOnManager = ({ shopId }) => {
   const [addOnPrice, setAddOnPrice] = useState("");
   const [addOns, setAddOns] = useState([]);
   const [editingAddOnId, setEditingAddOnId] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchAddOns = async () => {
     try {
+      setLoading(true);
       const response = await api.get(`/addOns?shop_id=${shopId}`);
       setAddOns(response.data);
+      setError("");
     } catch (err) {
       console.error("Error fetching addOns:", err);
+      setError("Failed to load AddOns.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -20,41 +45,35 @@ const AddOnManager = ({ shopId }) => {
     if (shopId) fetchAddOns();
   }, [shopId]);
 
-  const handleAddAddOn = async () => {
+  const handleSaveAddOn = async () => {
+    if (!addOnName.trim()) {
+      setError("AddOn name is required.");
+      return;
+    }
+
     try {
       const addOnData = {
         name: addOnName,
-        price: parseFloat(addOnPrice),
+        price: parseFloat(addOnPrice) || 0,
         shop_id: shopId,
       };
 
-      await api.post("/addOns", addOnData);
-      alert("AddOn added successfully");
-      setAddOnName("");
-      setAddOnPrice("");
-      fetchAddOns();
-    } catch (err) {
-      console.error("Error adding AddOn:", err);
-      alert("Error adding AddOn");
-    }
-  };
+      if (editingAddOnId) {
+        await api.patch(`/addOns/${editingAddOnId}`, addOnData);
+        alert("AddOn updated successfully");
+      } else {
+        await api.post("/addOns", addOnData);
+        alert("AddOn added successfully");
+      }
 
-  const handleUpdateAddOn = async () => {
-    try {
-      const addOnData = {
-        name: addOnName,
-        price: parseFloat(addOnPrice),
-      };
-
-      await api.patch(`/addOns/${editingAddOnId}`, addOnData);
-      alert("AddOn updated successfully");
       setEditingAddOnId(null);
       setAddOnName("");
       setAddOnPrice("");
+      setError("");
       fetchAddOns();
     } catch (err) {
-      console.error("Error updating AddOn:", err);
-      alert("Error updating AddOn");
+      console.error("Error saving AddOn:", err);
+      setError("Error saving AddOn.");
     }
   };
 
@@ -65,7 +84,7 @@ const AddOnManager = ({ shopId }) => {
       fetchAddOns();
     } catch (err) {
       console.error("Error deleting AddOn:", err);
-      alert("Error deleting AddOn");
+      setError("Error deleting AddOn.");
     }
   };
 
@@ -76,62 +95,103 @@ const AddOnManager = ({ shopId }) => {
   };
 
   return (
-    <div>
-      <h3>{editingAddOnId ? "Edit AddOn" : "Add AddOn"}</h3>
-      <input
-        type="text"
-        placeholder="AddOn Name"
-        value={addOnName}
-        onChange={(e) => setAddOnName(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Price"
-        value={addOnPrice}
-        onChange={(e) => setAddOnPrice(e.target.value)}
-      />
-      {editingAddOnId ? (
-        <div>
-          <button onClick={handleUpdateAddOn}>Update AddOn</button>
-          <button
-            onClick={() => {
-              setEditingAddOnId(null);
-              setAddOnName("");
-              setAddOnPrice("");
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <button onClick={handleAddAddOn}>Add AddOn</button>
-      )}
+    <Container maxWidth="sm">
+      <Card sx={{ mt: 3, p: 3 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            {editingAddOnId ? "Edit AddOn" : "Add AddOn"}
+          </Typography>
 
-      <h3>AddOns</h3>
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {addOns.map((addOn) => (
-            <tr key={addOn.id}>
-              <td>{addOn.name}</td>
-              <td>{addOn.price}</td>
-              <td>
-                <button onClick={() => handleEditAddOn(addOn)}>Edit</button>
-                <button onClick={() => handleDeleteAddOn(addOn.id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          {error && <Alert severity="error">{error}</Alert>}
+          {loading && <CircularProgress sx={{ my: 2 }} />}
+
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              label="AddOn Name"
+              variant="outlined"
+              fullWidth
+              value={addOnName}
+              onChange={(e) => setAddOnName(e.target.value)}
+            />
+
+            <TextField
+              label="Price"
+              type="number"
+              variant="outlined"
+              fullWidth
+              value={addOnPrice}
+              onChange={(e) => setAddOnPrice(e.target.value)}
+            />
+
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSaveAddOn}
+              >
+                {editingAddOnId ? "Update AddOn" : "Add AddOn"}
+              </Button>
+              {editingAddOnId && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    setEditingAddOnId(null);
+                    setAddOnName("");
+                    setAddOnPrice("");
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+        </CardContent>
+      </Card>
+
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        AddOns
+      </Typography>
+
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {addOns.map((addOn) => (
+              <TableRow key={addOn.id}>
+                <TableCell>{addOn.name}</TableCell>
+                <TableCell>${addOn.price}</TableCell>
+                <TableCell>
+                  <Stack direction="row" spacing={1}>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => handleEditAddOn(addOn)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDeleteAddOn(addOn.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 
