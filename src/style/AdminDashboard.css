@@ -51,22 +51,27 @@ tr:hover {
     grid-template-columns: 1fr 1fr;
 }
 
-.shopUpdate > h3.header{
+.shopUpdate>h3.header {
     grid-area: header;
 }
-.shopUpdate > div.shopName{
+
+.shopUpdate>div.shopName {
     grid-area: shopName;
 }
-.shopUpdate > div.shopImage{
+
+.shopUpdate>div.shopImage {
     grid-area: shopImage;
 }
-.shopUpdate > div.shopDescrption{
+
+.shopUpdate>div.shopDescrption {
     grid-area: shopDescrption;
 }
-.shopUpdate > div.displayedImage{
+
+.shopUpdate>div.displayedImage {
     grid-area: displayedImage;
 }
 
 .shopUpdate div {
     display: flex;
+    flex-direction: column;
 }
