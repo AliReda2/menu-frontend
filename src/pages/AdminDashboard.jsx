@@ -33,8 +33,8 @@ const AdminDashboard = () => {
         setShop(response.data);
         setCategories(response.data.categories);
         setShopData({
-          name: shop.name || "",
-          description: shop.description || "",
+          name: response.data.name || "",
+          description: response.data.description || "",
         });
         setError(""); // Reset error state if the shop is fetched successfully
       } catch (err) {
