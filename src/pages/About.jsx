@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import api from "../services/api";
 import { useGlobalState } from "../context/GlobalState";
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  Alert,
+  Paper,
+  Box,
+} from "@mui/material";
 
 // Custom Leaflet Marker Icon
 const customIcon = new L.Icon({
@@ -18,61 +26,84 @@ const customIcon = new L.Icon({
 });
 
 const AboutUs = () => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const { shopId } = useGlobalState();
-  // console.log("AboutUs shopId:", shopId);
 
   useEffect(() => {
     const fetchAboutUs = async () => {
       try {
         const response = await api.get(`/aboutUs?shop_id=${shopId}`);
 
-        // Ensure valid latitude and longitude exist before updating state
         if (response.data.latitude && response.data.longitude) {
           setData(response.data);
         } else {
-          console.warn("Invalid coordinates received from API");
+          setError("Invalid location data received.");
         }
-      } catch (error) {
-        console.error("Error fetching About Us data:", error);
+      } catch (err) {
+        console.error("Error fetching About Us data:", err);
+        setError("Failed to load About Us information.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchAboutUs();
-  }, []);
+  }, [shopId]);
+
+  if (loading)
+    return <CircularProgress sx={{ display: "block", margin: "20px auto" }} />;
+  if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <div className="about-us">
-      <h2 className="about-us__title">
-        {data.address || "Loading Address..."}
-      </h2>
-      <p className="about-us__description">
-        {data.description || "Loading Description..."}
-      </p>
-      <div className="about-us__map-section">
-        <h3 className="about-us__map-title">Find Us Here:</h3>
-        {data.latitude && data.longitude ? (
-          <MapContainer
-            center={[data.latitude, data.longitude]}
-            zoom={15}
-            style={{ height: "400px", width: "100%", borderRadius: "8px" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker
-              position={[data.latitude, data.longitude]}
-              icon={customIcon}
+    <Container maxWidth="md">
+      <Paper sx={{ p: 3, my: 4, textAlign: "center" }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          {data?.address || "Address Not Available"}
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          {data?.description || "No description available."}
+        </Typography>
+
+        <Typography variant="h6" sx={{ mt: 3 }}>
+          Find Us Here:
+        </Typography>
+
+        <Box
+          sx={{
+            height: 400,
+            width: "100%",
+            mt: 2,
+            borderRadius: 2,
+            overflow: "hidden",
+          }}
+        >
+          {data?.latitude && data?.longitude ? (
+            <MapContainer
+              center={[data.latitude, data.longitude]}
+              zoom={15}
+              style={{ height: "100%", width: "100%" }}
             >
-              <Popup>{data.address || "We are here!"}</Popup>
-            </Marker>
-          </MapContainer>
-        ) : (
-          <p>Loading map...</p>
-        )}
-      </div>
-    </div>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              <Marker
+                position={[data.latitude, data.longitude]}
+                icon={customIcon}
+              >
+                <Popup>{data?.address || "We are here!"}</Popup>
+              </Marker>
+            </MapContainer>
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              Map data unavailable.
+            </Typography>
+          )}
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
