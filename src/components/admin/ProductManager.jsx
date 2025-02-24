@@ -1,4 +1,26 @@
 import { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+  Stack,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import api from "../../services/api";
 
 const ProductManager = ({ shopId, categories }) => {
@@ -8,35 +30,34 @@ const ProductManager = ({ shopId, categories }) => {
   const [productCategory, setProductCategory] = useState("");
   const [productImage, setProductImage] = useState(null);
   const [editingProductId, setEditingProductId] = useState(null);
-  // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-
-  // const fetchCategories = async () => {
-  //   try {
-  //     const response = await api.get(`/categories?shop_id=${shopId}`);
-  //     setCategories(response.data);
-  //   } catch (err) {
-  //     console.error("Error fetching categories:", err);
-  //   }
-  // };
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const response = await api.get(`/menu?shop_id=${shopId}`);
       setProducts(response.data);
+      setError("");
     } catch (err) {
       console.error("Error fetching products:", err);
+      setError("Failed to load products.");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (shopId) {
-      // fetchCategories();
-      fetchProducts();
-    }
+    if (shopId) fetchProducts();
   }, [shopId]);
 
-  const handleAddProduct = async () => {
+  const handleAddOrUpdateProduct = async () => {
+    if (!productName.trim() || !productCategory) {
+      setError("Product name and category are required.");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("name", productName);
@@ -46,47 +67,25 @@ const ProductManager = ({ shopId, categories }) => {
       formData.append("shop_id", shopId);
       if (productImage) formData.append("image", productImage);
 
-      await api.post("/menu", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      if (editingProductId) {
+        await api.patch(`/menu/${editingProductId}`, formData);
+        alert("Product updated successfully");
+      } else {
+        await api.post("/menu", formData);
+        alert("Product added successfully");
+      }
 
-      alert("Product added successfully");
-      setProductName("");
-      setProductDescription("");
-      setProductPrice("");
-      setProductCategory("");
-      setProductImage(null);
-      fetchProducts();
-    } catch (err) {
-      console.error("Error adding product:", err);
-      alert("Error adding product");
-    }
-  };
-
-  const handleUpdateProduct = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("name", productName);
-      formData.append("description", productDescription);
-      formData.append("price", productPrice);
-      formData.append("category_id", productCategory);
-      if (productImage) formData.append("image", productImage);
-
-      await api.patch(`/menu/${editingProductId}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      alert("Product updated successfully");
       setEditingProductId(null);
       setProductName("");
       setProductDescription("");
       setProductPrice("");
       setProductCategory("");
       setProductImage(null);
+      setError("");
       fetchProducts();
     } catch (err) {
-      console.error("Error updating product:", err);
-      alert("Error updating product");
+      console.error("Error saving product:", err);
+      setError("Error saving product.");
     }
   };
 
@@ -97,7 +96,7 @@ const ProductManager = ({ shopId, categories }) => {
       fetchProducts();
     } catch (err) {
       console.error("Error deleting product:", err);
-      alert("Error deleting product");
+      setError("Error deleting product.");
     }
   };
 
@@ -110,103 +109,153 @@ const ProductManager = ({ shopId, categories }) => {
   };
 
   return (
-    <div>
-      <h3>{editingProductId ? "Edit Product" : "Add Product"}</h3>
-      <select
-        value={productCategory}
-        onChange={(e) => setProductCategory(e.target.value)}
-      >
-        <option value="">Select Category</option>
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
-      <input
-        type="text"
-        placeholder="Product Name"
-        value={productName}
-        onChange={(e) => setProductName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Description"
-        value={productDescription}
-        onChange={(e) => setProductDescription(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Price"
-        value={productPrice}
-        onChange={(e) => setProductPrice(e.target.value)}
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setProductImage(e.target.files[0])}
-      />
-      {editingProductId ? (
-        <div>
-          <button onClick={handleUpdateProduct}>Update Product</button>
-          <button
-            onClick={() => {
-              setEditingProductId(null);
-              setProductName("");
-              setProductDescription("");
-              setProductPrice("");
-              setProductCategory("");
-              setProductImage(null);
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <button onClick={handleAddProduct}>Add Product</button>
-      )}
+    <Container maxWidth="md">
+      <Card sx={{ mt: 3, p: 3 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            {editingProductId ? "Edit Product" : "Add Product"}
+          </Typography>
 
-      <h3>Products</h3>
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((prod) => (
-            <tr key={prod.id}>
-              <td>{prod.name}</td>
-              <td>{prod.description}</td>
-              <td>{prod.price}</td>
-              <td>{prod.category_name}</td>
-              <td>
-                {prod.image ? (
-                  <img
-                    src={prod.image}
-                    alt={prod.name}
-                    width="50"
-                  />
-                ) : (
-                  "No image"
-                )}
-              </td>
-              <td>
-                <button onClick={() => handleEditProduct(prod)}>Edit</button>
-                <button onClick={() => handleDeleteProduct(prod.id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          {error && <Alert severity="error">{error}</Alert>}
+          {loading && <CircularProgress />}
+
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel>Select Category</InputLabel>
+              <Select
+                value={productCategory}
+                onChange={(e) => setProductCategory(e.target.value)}
+              >
+                <MenuItem value="">Select Category</MenuItem>
+                {categories.map((cat) => (
+                  <MenuItem key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <TextField
+              label="Product Name"
+              variant="outlined"
+              fullWidth
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+            />
+
+            <TextField
+              label="Description"
+              variant="outlined"
+              fullWidth
+              value={productDescription}
+              onChange={(e) => setProductDescription(e.target.value)}
+            />
+
+            <TextField
+              label="Price"
+              type="number"
+              variant="outlined"
+              fullWidth
+              value={productPrice}
+              onChange={(e) => setProductPrice(e.target.value)}
+            />
+
+            <Button variant="contained" component="label">
+              Upload Product Image
+              <input
+                type="file"
+                hidden
+                onChange={(e) => setProductImage(e.target.files[0])}
+              />
+            </Button>
+
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAddOrUpdateProduct}
+              >
+                {editingProductId ? "Update Product" : "Add Product"}
+              </Button>
+              {editingProductId && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    setEditingProductId(null);
+                    setProductName("");
+                    setProductDescription("");
+                    setProductPrice("");
+                    setProductCategory("");
+                    setProductImage(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+        </CardContent>
+      </Card>
+
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        Products
+      </Typography>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Image</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products.map((prod) => (
+              <TableRow key={prod.id}>
+                <TableCell>{prod.name}</TableCell>
+                <TableCell>{prod.description}</TableCell>
+                <TableCell>${prod.price}</TableCell>
+                <TableCell>{prod.category_name}</TableCell>
+                <TableCell>
+                  {prod.image ? (
+                    <img
+                      src={prod.image}
+                      alt={prod.name}
+                      style={{ width: 50, height: 50, borderRadius: "8px" }}
+                    />
+                  ) : (
+                    "No image"
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Stack direction="row" spacing={1}>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => handleEditProduct(prod)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDeleteProduct(prod.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 
