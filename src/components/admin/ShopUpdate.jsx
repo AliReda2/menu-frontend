@@ -91,7 +91,7 @@ const ShopUpdate = ({ shopId, shop }) => {
         />
       </div>
 
-      <div className="desplayedImage">
+      <div className="displayedImage">
         <button onClick={handleUpdateShop}>Update Shop</button>
 
         <h3>Current Shop Image</h3>
