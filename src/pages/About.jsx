@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import api from "../services/api";
-import "../style/AboutUs.css";
 import { useGlobalState } from "../context/GlobalState";
 
 // Custom Leaflet Marker Icon

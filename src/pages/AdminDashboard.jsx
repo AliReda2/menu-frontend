@@ -7,7 +7,6 @@ import AddOnManager from "../components/admin/AddOnManager";
 import AboutUsUpdate from "../components/admin/AboutUsUpdate";
 import ShopUpdate from "../components/admin/ShopUpdate";
 import api from "../services/api";
-import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const shopId = localStorage.getItem("shop_id");
