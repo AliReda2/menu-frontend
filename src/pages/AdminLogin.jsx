@@ -1,79 +1,100 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import "../style/AdminLogin.css";
+import {
+  TextField,
+  Button,
+  Container,
+  Paper,
+  Typography,
+  CircularProgress,
+  Alert,
+  Box,
+} from "@mui/material";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+
     try {
       const response = await api.post("/users/login", {
         name: username,
-        password: password,
+        password,
       });
 
-      // console.log("Login response:", response.data);
-
       if (response.data.success) {
-        const shopId = response.data.user?.shop_id; // Optional chaining to avoid errors
+        const { shop_id, token } = response.data.user || {};
 
-        if (shopId) {
+        if (shop_id && token) {
           localStorage.setItem("isAdminAuthenticated", "true");
-          navigate(`/admin`);
+          localStorage.setItem("adminToken", token); // Store token for future requests
+          navigate("/admin");
         } else {
-          console.error("No shop_id found in response:", response.data);
-          setErrorMessage("Shop ID not found. Please contact support.");
+          setErrorMessage("Invalid response. Please contact support.");
         }
       } else {
-        setErrorMessage("Invalid username or password");
+        setErrorMessage("Invalid username or password.");
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setErrorMessage(error.response?.data?.error || "Something went wrong");
+      setErrorMessage(error.response?.data?.error || "Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Admin Login</h2>
-        {errorMessage && <p className="error">{errorMessage}</p>}
+    <Container maxWidth="xs">
+      <Paper elevation={3} sx={{ p: 4, mt: 6, textAlign: "center" }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          Admin Login
+        </Typography>
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
+
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
+          <TextField
+            fullWidth
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            variant="outlined"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            sx={{ mb: 2 }}
+          />
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit" className="login-btn">
-            Login
-          </button>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+          </Button>
         </form>
-      </div>
-    </div>
+      </Paper>
+    </Container>
   );
 };
 
